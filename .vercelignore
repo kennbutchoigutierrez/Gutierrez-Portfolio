@@ -10,3 +10,12 @@ inspiration-archive.txt
 images/*.png.png
 videos/reference.mp4
 videos/pkc-gutierrez-wave-color-graded.mp4
+
+# Test tooling — keep the deploy a pure static site (no build step)
+node_modules/
+tests/
+playwright.config.ts
+package.json
+package-lock.json
+playwright-report/
+test-results/
