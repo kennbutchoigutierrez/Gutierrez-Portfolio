@@ -34,10 +34,8 @@
 
 <style>
 /* Self-hosted, glyph-subset Newsreader (display face) — preloaded above. */
-/* 'optional': preloaded so it renders in-font on fast connections, but never
-   triggers a late swap that would push out the hero-headline LCP. */
-@font-face{font-family:'Newsreader';font-style:italic;font-weight:400;font-display:optional;src:url(assets/fonts/newsreader-italic-400.woff2) format('woff2');}
-@font-face{font-family:'Newsreader';font-style:italic;font-weight:500;font-display:optional;src:url(assets/fonts/newsreader-italic-500.woff2) format('woff2');}
+@font-face{font-family:'Newsreader';font-style:italic;font-weight:400;font-display:swap;src:url(assets/fonts/newsreader-italic-400.woff2) format('woff2');}
+@font-face{font-family:'Newsreader';font-style:italic;font-weight:500;font-display:swap;src:url(assets/fonts/newsreader-italic-500.woff2) format('woff2');}
 
 /* ─── Design tokens (from PKC Gutiérrez design system) ─────────────────── */
 :root{
