@@ -1,0 +1,9 @@
+# Windows system files
+desktop.ini
+Thumbs.db
+
+# macOS
+.DS_Store
+
+# Node
+node_modules/

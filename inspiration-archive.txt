@@ -1,0 +1,79 @@
+ARCHIVE — sections removed from inspiration.md during the reorg to the "Portfolio inspiration" template.
+Kept here for reference only. This file does not affect inspiration.md.
+
+====================================================================
+
+A living moodboard and reference doc for the Gutierrez portfolio. Use this to keep design and content decisions consistent as the site comes together.
+
+## Goal
+
+A portfolio that feels intentional and personal — not a template. It should load fast, read clearly, and leave a visitor with a strong sense of who Gutierrez is and what they do.
+
+## Direction / Vibe
+
+Pick one primary direction and commit to it. Options to consider:
+
+- Editorial minimal — Generous whitespace, one strong typeface, restrained color. Content does the talking. (Think a well-set magazine.)
+- Bold & expressive — Large display type, a confident accent color, motion on scroll. Memorable, opinionated.
+- Warm & human — Softer palette, rounded shapes, photography of real work/life. Approachable.
+- Technical / systems — Monospace accents, grid-forward layout, subtle terminal aesthetic. Good for a developer.
+
+## Reference Sites
+
+Sites worth studying for layout, typography, and interaction (add links as you find them):
+
+- Personal portfolios with a single memorable idea rather than a feature list
+- Case-study pages that tell a story: problem → approach → outcome
+- Award galleries (Awwwards, Godly, Land-book) for current visual trends
+
+## Typography
+
+- Display / headings: TBD — a typeface with personality for the hero and section titles
+- Body: TBD — highly legible at small sizes, good at 16–18px
+- Aim for strong contrast between heading and body sizes; establish a clear type scale.
+
+## Color
+
+- Choose a neutral base (near-black + off-white) and one accent.
+- Ensure text meets WCAG AA contrast in both light and dark.
+- Define the palette once as tokens/variables and reuse everywhere.
+
+## Layout & Structure
+
+Sections most portfolios need:
+
+1. Hero — Name, one-line what-you-do, a clear next action.
+2. About — Short bio, a photo, what you care about.
+3. Work / Projects — 3–6 strong pieces, each with a thumbnail and a one-line result.
+4. Skills / Tools — Brief, scannable.
+
+Keep it to what's needed. One great project beats five mediocre ones.
+
+## Interaction & Motion
+
+- Motion should support hierarchy, not decorate. Subtle entrance fades, smooth scroll, hover feedback.
+- Respect prefers-reduced-motion.
+- Everything usable by keyboard; visible focus states.
+
+## Content Principles
+
+- Write in first person, plainly. Cut filler.
+- Lead every project with the outcome, then the how.
+- Show real work over stock imagery wherever possible.
+
+## Tech Considerations (to decide)
+
+- Static site vs. framework (Next.js / Astro)
+- Hosting (Vercel is a strong default)
+- Fast: optimize images, minimal JS, good Lighthouse scores
+
+## Open Questions
+
+- Who is Gutierrez (full name, role/field)?
+- What's the single most important thing a visitor should remember?
+- What existing content exists (bio, projects, photos, resume)?
+- Light mode, dark mode, or both?
+
+---
+
+Update this doc as decisions are made. It's the source of truth for the site's look and feel.
