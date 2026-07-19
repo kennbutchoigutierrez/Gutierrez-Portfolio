@@ -3,15 +3,45 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>PKC Gutiérrez — Estimating &amp; Virtual Assistance</title>
-<meta name="description" content="Peter Kenneth Gutiérrez — Registered Electronics &amp; Communications Technician working construction estimating and virtual assistance. From blueprints to inboxes, I build systems that run.">
+<title>Peter Kenneth Gutiérrez | Portfolio</title>
+<meta name="description" content="From blueprints to inboxes, I build systems that run — Peter Kenneth Gutiérrez, construction estimating &amp; virtual assistance.">
+
+<!-- Favicon -->
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+
+<!-- Canonical + Open Graph / Twitter. NOTE: replace the placeholder base URL
+     "https://gutierrez-portfolio.example.com" with your real deployed URL. -->
+<link rel="canonical" href="https://gutierrez-portfolio.example.com/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Peter Kenneth Gutiérrez | Portfolio">
+<meta property="og:description" content="From blueprints to inboxes, I build systems that run — Peter Kenneth Gutiérrez, construction estimating &amp; virtual assistance.">
+<meta property="og:url" content="https://gutierrez-portfolio.example.com/">
+<meta property="og:image" content="https://gutierrez-portfolio.example.com/images/og-card.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Peter Kenneth Gutiérrez | Portfolio">
+<meta name="twitter:description" content="From blueprints to inboxes, I build systems that run — Peter Kenneth Gutiérrez, construction estimating &amp; virtual assistance.">
+<meta name="twitter:image" content="https://gutierrez-portfolio.example.com/images/og-card.png">
 
 <!-- Fonts: Newsreader (display serif), Karla (body), Space Mono (labels) — the design-system faces -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500;1,6..72,600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<!-- Newsreader (display) self-hosted + glyph-subset (~32KB total), preloaded so the hero
+     headline (the LCP element) paints in-font immediately. -->
+<link rel="preload" as="font" type="font/woff2" href="assets/fonts/newsreader-italic-400.woff2" crossorigin>
+<link rel="preload" as="font" type="font/woff2" href="assets/fonts/newsreader-italic-500.woff2" crossorigin>
+<!-- Karla (body) + Space Mono (labels) loaded async — non-render-blocking, display=swap. -->
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Karla:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Karla:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap"></noscript>
 
 <style>
+/* Self-hosted, glyph-subset Newsreader (display face) — preloaded above. */
+@font-face{font-family:'Newsreader';font-style:italic;font-weight:400;font-display:swap;src:url(assets/fonts/newsreader-italic-400.woff2) format('woff2');}
+@font-face{font-family:'Newsreader';font-style:italic;font-weight:500;font-display:swap;src:url(assets/fonts/newsreader-italic-500.woff2) format('woff2');}
+
 /* ─── Design tokens (from PKC Gutiérrez design system) ─────────────────── */
 :root{
   /* colors */
@@ -22,6 +52,7 @@
   --color-anchor:#172218; --color-anchor-deep:#0E1B0E;
   --color-on-anchor:#F7F6F2; --color-on-anchor-muted:rgba(247,246,242,0.55);
   --color-accent:#C9F59A; --color-accent-strong:#9FCB68; --color-accent-soft:#E7F5D3;
+  --color-royal-green:#1E7A46;
   --color-on-accent:#14231A;
   --color-accent-2:#C1501F; --color-accent-2-strong:#973D18; --color-accent-2-soft:#F3D0BC;
   --color-on-accent-2:#FBF1E6;
@@ -53,7 +84,7 @@
 }
 
 *{box-sizing:border-box;}
-html{scroll-behavior:auto;}
+html{scroll-behavior:smooth;}
 body{
   margin:0;
   background:var(--surface-page);
@@ -92,15 +123,23 @@ a:hover{color:var(--link-hover);}
 @media (max-width:680px){.nav__links{display:none;}}
 
 /* ─── Hero ─────────────────────────────────────────────────────────────── */
-.hero{position:relative;min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:140px 48px 96px;}
+.hero{position:relative;isolation:isolate;min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:140px 48px 96px;background:var(--color-anchor-deep);}
 .hero__grad{position:absolute;inset:0;z-index:0;background:linear-gradient(120deg,#9FCB68,#739274,#9EA894,#867257,#172218,#0E1B0E);opacity:0.92;}
-.hero__grain,.footer__grain{position:absolute;inset:0;width:100%;height:100%;opacity:0.16;mix-blend-mode:overlay;pointer-events:none;}
-.hero__grain{z-index:1;}
-.hero__glow{position:absolute;inset:0;z-index:2;background:radial-gradient(ellipse at 30% 20%, rgba(247,246,242,0.08), transparent 60%);}
+/* Background video (sits above the gradient fallback). */
+.hero__video{position:absolute;inset:0;z-index:0;width:100%;height:100%;object-fit:cover;}
+/* Design-system colour washes over the video: Accent ramp (#C9F59A / #9FCB68 /
+   #E7F5D3) + Accent-2 Soft (#F3D0BC) + Tan (#867257), screened to brighten & tint. */
+.hero__tint{position:absolute;inset:0;z-index:1;pointer-events:none;mix-blend-mode:color;background:linear-gradient(120deg,#1E7A46 0%,#9FCB68 18%,#C9F59A 32%,#9EA894 48%,#867257 66%,#F3D0BC 82%,#172218 100%);}
+/* Anchor-ramp dark wash (#172218 -> #0E1B0E), kept on the left so hero text stays readable. */
+.hero__overlay{position:absolute;inset:0;z-index:2;background:linear-gradient(100deg,rgba(23,34,24,0.72) 0%,rgba(14,27,14,0.42) 38%,rgba(14,27,14,0.08) 70%,rgba(14,27,14,0) 100%);}
+.footer__grain{position:absolute;inset:0;width:100%;height:100%;opacity:0.16;mix-blend-mode:overlay;pointer-events:none;}
+.hero__glow{position:absolute;inset:0;z-index:2;background:radial-gradient(ellipse at 30% 20%, rgba(247,246,242,0.06), transparent 60%);}
 .hero__inner{position:relative;z-index:3;max-width:900px;}
-.hero__eyebrow{font-family:var(--font-mono);font-size:13px;letter-spacing:1.5px;text-transform:uppercase;color:var(--color-on-anchor-muted);margin-bottom:24px;}
-.hero__title{font-family:var(--font-display);font-style:italic;font-weight:400;font-size:clamp(44px,9vw,96px);line-height:1;letter-spacing:clamp(-2.6px,-0.3vw,-1.2px);color:var(--color-on-anchor);margin:0 0 28px;text-wrap:pretty;}
-.hero__lede{font-family:var(--font-body);font-size:18px;line-height:1.6;color:var(--color-on-anchor-muted);max-width:560px;margin:0;}
+.hero__eyebrow{font-family:var(--font-mono);font-size:13px;letter-spacing:1.5px;text-transform:uppercase;color:var(--color-on-anchor-muted);margin-bottom:24px;text-shadow:0 1px 8px rgba(0,0,0,0.45);}
+.hero__title{font-family:var(--font-display);font-style:italic;font-weight:400;font-size:clamp(44px,9vw,96px);line-height:1;letter-spacing:clamp(-2.6px,-0.3vw,-1.2px);color:var(--color-on-anchor);margin:0 0 28px;text-wrap:pretty;text-shadow:0 2px 20px rgba(0,0,0,0.45);}
+.hero__lede{font-family:var(--font-body);font-size:18px;line-height:1.6;color:var(--color-on-anchor-muted);max-width:560px;margin:0;text-shadow:0 1px 12px rgba(0,0,0,0.5);}
+.hero__cta{display:inline-flex;align-items:center;gap:8px;margin-top:32px;height:48px;padding:0 26px;font-family:var(--font-body);font-weight:600;font-size:15px;background:var(--color-accent);color:var(--color-on-accent);border-radius:var(--radius-pill);box-shadow:var(--shadow-raised);transition:background var(--duration-fast) var(--ease-quiet),transform var(--duration-base) var(--ease-quiet);}
+.hero__cta:hover{background:var(--color-accent-strong);color:var(--color-on-accent);transform:translateY(-2px);}
 
 /* ─── Section scaffolding ──────────────────────────────────────────────── */
 .section{padding:112px 48px;margin:0 auto;}
@@ -114,6 +153,7 @@ a:hover{color:var(--link-hover);}
 .about__grid{display:grid;grid-template-columns:300px 1fr;gap:clamp(32px,5vw,64px);align-items:start;margin-top:24px;}
 .about__figure{margin:0;position:sticky;top:120px;}
 .about__portrait{position:relative;border:1px solid var(--border-strong);border-radius:var(--radius-md);overflow:hidden;background:var(--color-paper-deep);}
+.about__portrait picture{display:block;}
 .about__portrait img{display:block;width:100%;height:auto;aspect-ratio:4/5;object-fit:cover;object-position:center 18%;}
 .about__caption{display:block;font-family:var(--font-mono);font-size:11px;letter-spacing:1.2px;text-transform:uppercase;color:var(--text-faint);margin-top:12px;}
 .about__lead{font-family:var(--font-display);font-style:italic;font-weight:400;font-size:clamp(24px,4vw,34px);line-height:1.45;letter-spacing:-0.4px;color:var(--text-body);margin:0 0 40px;text-wrap:pretty;}
@@ -128,22 +168,39 @@ a:hover{color:var(--link-hover);}
 
 /* Work */
 .rows{border-top:1px solid var(--border-default);}
-.work-row{display:flex;align-items:center;justify-content:space-between;gap:clamp(20px,4vw,40px);padding:32px 0;border-bottom:1px solid var(--border-default);}
+.work-row{display:flex;align-items:flex-start;justify-content:space-between;gap:clamp(20px,4vw,40px);padding:32px 0;border-bottom:1px solid var(--border-default);}
 .work-row__thumb{
-  flex-shrink:0;width:clamp(96px,14vw,160px);aspect-ratio:4/3;border-radius:var(--radius-sm);
+  flex-shrink:0;width:clamp(120px,18vw,200px);aspect-ratio:4/3;border-radius:var(--radius-sm);
   border:1px solid var(--border-default);background:
     repeating-linear-gradient(135deg,var(--color-paper-deep) 0 10px,var(--color-paper) 10px 20px);
   display:flex;align-items:center;justify-content:center;overflow:hidden;
 }
 .work-row__thumb span{font-family:var(--font-mono);font-size:10px;letter-spacing:1.2px;text-transform:uppercase;color:var(--text-faint);}
+/* Real-screenshot thumbnails: cover, anchored to the top of the capture. */
+.work-row__thumb--shot{padding:0;background:var(--color-paper-deep);}
+.work-row__thumb--shot picture{display:block;width:100%;height:100%;}
+.work-row__thumb--shot img{display:block;width:100%;height:100%;object-fit:cover;object-position:top center;transition:transform var(--duration-slow) var(--ease-quiet);}
+.work-row:hover .work-row__thumb--shot img{transform:scale(1.045);}
 @media (max-width:560px){.work-row__thumb{display:none;}}
+.work-row__body{flex:1;min-width:0;}
 .work-row__head{display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;}
 .work-row__name{font-family:var(--font-display);font-style:italic;font-weight:500;font-size:clamp(22px,3vw,28px);letter-spacing:-0.3px;color:var(--text-body);margin:0;}
 .work-row__year{font-family:var(--font-mono);font-size:12px;letter-spacing:1.2px;color:var(--text-faint);}
 .work-row__outcome{font-family:var(--font-body);font-size:17px;line-height:1.6;color:var(--text-muted);margin:10px 0 16px;max-width:560px;}
 .tags{display:flex;gap:8px;flex-wrap:wrap;}
 .tag{font-family:var(--font-mono);font-size:11px;letter-spacing:1.2px;text-transform:uppercase;color:var(--text-muted);border:1px solid var(--border-default);border-radius:var(--radius-pill);padding:5px 12px;}
-.work-row__arrow{font-family:var(--font-display);font-style:italic;font-size:28px;color:var(--color-accent-2);flex-shrink:0;}
+.work-row__link{display:inline-flex;align-items:center;gap:7px;margin-top:16px;font-family:var(--font-mono);font-size:12px;letter-spacing:1.3px;text-transform:uppercase;color:var(--color-accent-2);border-bottom:1px solid transparent;padding-bottom:2px;transition:color var(--duration-fast) var(--ease-quiet),border-color var(--duration-fast) var(--ease-quiet);}
+.work-row__link:hover{color:var(--color-accent-2-strong);border-color:var(--color-accent-2-strong);}
+.work-row--soon{opacity:0.7;}
+/* Autoplay project reel at the top of Work */
+.work-reel{position:relative;margin:8px 0 52px;border-radius:var(--radius-md);overflow:hidden;border:1px solid var(--border-default);box-shadow:var(--shadow-raised);background:var(--color-paper-deep);aspect-ratio:16/9;}
+.work-reel__video,.work-reel__poster{display:block;width:100%;height:100%;object-fit:cover;}
+.work-reel__poster{display:none;}
+/* Motion off: hide the video, show the poster still instead. */
+@media (prefers-reduced-motion: reduce){
+  .work-reel__video{display:none;}
+  .work-reel__poster{display:block;}
+}
 
 /* Skills (rust block) */
 .skills{padding:64px clamp(20px,6vw,64px) 96px;background:var(--color-accent-2);border-radius:var(--radius-md);margin:64px clamp(16px,5vw,64px);}
@@ -178,9 +235,15 @@ a:hover{color:var(--link-hover);}
 }
 
 /* ─── Footer ───────────────────────────────────────────────────────────── */
-.footer{position:relative;background:linear-gradient(135deg,#0E1B0E,#172218,#3a5f44,#739274,#867257,#0E1B0E);color:var(--text-on-dark);padding:96px 48px 0;overflow:hidden;}
-.footer__grain{z-index:0;opacity:0.14;}
-.footer__inner{position:relative;z-index:1;max-width:1140px;margin:0 auto;}
+.footer{position:relative;isolation:isolate;background:var(--color-anchor-deep);color:var(--text-on-dark);padding:96px 48px 0;overflow:hidden;}
+/* Reversed (mirrored) still of the hero wave, darkened so footer text stays readable. */
+.footer__bg{position:absolute;inset:0;z-index:0;width:100%;height:100%;object-fit:cover;object-position:center;transform:scale(1.08);transition:transform 400ms var(--ease-quiet);will-change:transform;}
+/* Same design-system washes as the hero — Accent ramp + Accent-2 Soft + Tan. */
+.footer__tint{position:absolute;inset:0;z-index:1;pointer-events:none;mix-blend-mode:color;background:linear-gradient(120deg,#1E7A46 0%,#9FCB68 20%,#C9F59A 34%,#9EA894 50%,#867257 68%,#F3D0BC 84%,#172218 100%);}
+/* Anchor-ramp dark wash (#172218 -> #0E1B0E) keeps the footer text readable. */
+.footer__overlay{position:absolute;inset:0;z-index:2;background:linear-gradient(180deg,rgba(23,34,24,0.82),rgba(14,27,14,0.62));}
+.footer__grain{z-index:3;opacity:0.14;}
+.footer__inner{position:relative;z-index:4;max-width:1140px;margin:0 auto;}
 .footer__top{display:flex;flex-wrap:wrap;justify-content:space-between;gap:48px;padding-bottom:64px;border-bottom:1px solid rgba(243,236,218,0.14);}
 .footer__links{display:flex;gap:40px;flex-wrap:wrap;}
 .footer__link{font-family:var(--font-body);font-size:15px;color:var(--text-on-dark);opacity:0.85;}
@@ -193,12 +256,33 @@ a:hover{color:var(--link-hover);}
 .footer__copy{font-family:var(--font-mono);font-size:12px;letter-spacing:1px;color:var(--text-on-dark-muted);margin-top:40px;}
 .footer__arca-label{font-family:var(--font-mono);font-size:12px;letter-spacing:1.4px;text-transform:uppercase;color:var(--text-on-dark-muted);}
 
+/* ─── Reveal on scroll (ezefaz: subtle, atmospheric) ───────────────────────
+   Hidden state applies ONLY when JS is active (html.js-reveal), so with no JS
+   everything stays visible. Uses the baseline easing var(--ease-quiet). */
+html.js-reveal .reveal{opacity:0;transform:translateY(24px);transition:opacity 600ms var(--ease-quiet),transform 600ms var(--ease-quiet);will-change:opacity,transform;}
+html.js-reveal .reveal.is-visible{opacity:1;transform:none;}
+
+/* ─── Custom cursor dot (ezefaz-style) — fine pointers only, added by JS ──── */
+@media (pointer:fine){
+  html.cursor-on, html.cursor-on *{cursor:none;}
+}
+.cursor-dot{position:fixed;top:0;left:0;width:9px;height:9px;border-radius:50%;background:var(--color-accent);border:1px solid transparent;pointer-events:none;z-index:10000;opacity:0;transition:opacity 250ms ease,width 260ms var(--ease-quiet),height 260ms var(--ease-quiet),background 260ms ease,border-color 260ms ease;}
+.cursor-dot.is-active{opacity:1;}
+.cursor-dot.is-hover{width:42px;height:42px;background:rgba(201,245,154,0.16);border-color:var(--color-accent);}
+
+/* ─── Floating project preview on Work hover ──────────────────────────────── */
+.work-preview{position:fixed;top:0;left:0;z-index:9998;width:clamp(220px,24vw,320px);aspect-ratio:4/3;border-radius:10px;overflow:hidden;pointer-events:none;opacity:0;transform:translateY(10px) scale(0.96);transition:opacity 260ms var(--ease-quiet),transform 260ms var(--ease-quiet);box-shadow:var(--shadow-raised);border:1px solid var(--border-default);background:var(--color-paper-deep);}
+.work-preview.is-visible{opacity:1;transform:translateY(0) scale(1);}
+.work-preview img{display:block;width:100%;height:100%;object-fit:cover;object-position:top center;}
+
 /* ─── Reduced motion ───────────────────────────────────────────────────── */
 /* Motion & scroll effects are intentionally deferred to a later lesson; this
    block stays as the guarantee and neutralizes the remaining color transitions. */
 @media (prefers-reduced-motion: reduce){
   html{scroll-behavior:auto;}
   *{animation-duration:0.01ms !important;animation-iteration-count:1 !important;transition-duration:0.01ms !important;}
+  /* Motion off: hide the hero video; the gradient background shows instead. */
+  .hero__video{display:none;}
 }
 </style>
 </head>
@@ -220,12 +304,18 @@ a:hover{color:var(--link-hover);}
   <!-- ─── Hero ─── -->
   <section class="hero">
     <div class="hero__grad"></div>
-    <svg class="hero__grain"><filter id="heroGrain"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" stitchTiles="stitch" result="noise"></feTurbulence><feColorMatrix in="noise" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0"></feColorMatrix></filter><rect width="100%" height="100%" filter="url(#heroGrain)"></rect></svg>
+    <video class="hero__video" muted loop playsinline preload="none" poster="assets/hero-poster.jpg" aria-hidden="true">
+      <source src="videos/hero-wave.webm" type="video/webm">
+      <source src="videos/hero-wave.mp4" type="video/mp4">
+    </video>
+    <div class="hero__tint"></div>
+    <div class="hero__overlay"></div>
     <div class="hero__glow"></div>
     <div class="hero__inner">
       <div class="hero__eyebrow">Peter Kenneth Gutiérrez — Estimating &amp; Virtual Assistance</div>
       <h1 class="hero__title">From blueprints to inboxes, I build systems that run.</h1>
       <p class="hero__lede">Registered Electronics &amp; Communications Technician working construction estimating and virtual assistance — blueprints, take-offs, and inboxes, kept precise.</p>
+      <a class="hero__cta" href="resume.pdf" target="_blank" rel="noopener" download="peter-kenneth-gutierrez-resume.pdf">Download Résumé ↓</a>
     </div>
   </section>
 
@@ -235,7 +325,10 @@ a:hover{color:var(--link-hover);}
     <div class="about__grid">
       <figure class="about__figure">
         <div class="about__portrait">
-          <img src="assets/headshot.jpg" alt="Portrait of Peter Kenneth Gutiérrez" width="300" height="375" loading="lazy">
+          <picture>
+            <source srcset="assets/headshot.webp" type="image/webp">
+            <img src="assets/headshot.jpg" alt="Portrait of Peter Kenneth Gutiérrez" width="300" height="375" loading="lazy">
+          </picture>
         </div>
         <span class="about__caption">Peter Kenneth Gutiérrez — San Pablo City, PH</span>
       </figure>
@@ -251,42 +344,90 @@ a:hover{color:var(--link-hover);}
   <section class="section section--wide" id="work">
     <div class="eyebrow">Work</div>
     <h2 class="h2">Selected projects</h2>
+    <div class="work-reel">
+      <video class="work-reel__video" muted loop playsinline preload="none" poster="assets/work-reel-poster.jpg" width="1280" height="720" aria-label="Reel of featured projects">
+        <source src="assets/work-reel.webm" type="video/webm">
+        <source src="assets/work-reel.mp4" type="video/mp4">
+      </video>
+      <img class="work-reel__poster" src="assets/work-reel-poster.jpg" alt="Featured projects preview" width="1280" height="720">
+    </div>
     <div class="rows">
       <div class="work-row">
-        <div class="work-row__thumb"><span>Preview</span></div>
-        <div style="flex:1;min-width:0;">
-          <div class="work-row__head"><h3 class="work-row__name">Site-to-system handoff</h3><span class="work-row__year">2025</span></div>
-          <p class="work-row__outcome">Turned a stalled construction workflow into one shared source of truth. Approval time dropped by 40%.</p>
-          <div class="tags"><span class="tag">Ops</span><span class="tag">Systems</span></div>
+        <div class="work-row__thumb work-row__thumb--shot">
+          <picture>
+            <source srcset="images/freelanceflow-landing.webp" type="image/webp">
+            <img src="images/freelanceflow-landing.jpg" alt="FreelanceFlow landing page" loading="lazy">
+          </picture>
         </div>
-        <span class="work-row__arrow">→</span>
+        <div class="work-row__body">
+          <div class="work-row__head"><h3 class="work-row__name">FreelanceFlow</h3><span class="work-row__year">2026</span></div>
+          <p class="work-row__outcome">A budgeting app for people with irregular income — a safe-to-spend number, automatic tax set-aside, and runway tracking. I also built its internal submissions dashboard, reading live from Supabase.</p>
+          <div class="tags"><span class="tag">Product Design</span><span class="tag">Fintech</span><span class="tag">Supabase</span></div>
+          <a class="work-row__link" href="https://freelance-flow-landing-page-eight.vercel.app/" target="_blank" rel="noopener">View live ↗</a>
+        </div>
       </div>
       <div class="work-row">
-        <div class="work-row__thumb"><span>Preview</span></div>
-        <div style="flex:1;min-width:0;">
-          <div class="work-row__head"><h3 class="work-row__name">The inbox that runs itself</h3><span class="work-row__year">2024</span></div>
-          <p class="work-row__outcome">Built an email triage system that cut response time in half without adding headcount.</p>
-          <div class="tags"><span class="tag">Automation</span></div>
+        <div class="work-row__thumb work-row__thumb--shot">
+          <picture>
+            <source srcset="images/pitch-deck.webp" type="image/webp">
+            <img src="images/pitch-deck.jpg" alt="Sipped pitch deck — title slide" loading="lazy" style="object-position:center">
+          </picture>
         </div>
-        <span class="work-row__arrow">→</span>
+        <div class="work-row__body">
+          <div class="work-row__head"><h3 class="work-row__name">Sipped Pitch Deck</h3><span class="work-row__year">2026</span></div>
+          <p class="work-row__outcome">The pitch for Sipped, the social drink journal — problem, solution, the friends feed, and the monthly "Wrapped" recap, told as a colorful slide story.</p>
+          <div class="tags"><span class="tag">Pitch Deck</span><span class="tag">Presentation</span><span class="tag">Product Story</span></div>
+          <a class="work-row__link" href="https://sipped-pitch-deck.vercel.app/#1" target="_blank" rel="noopener">View live ↗</a>
+        </div>
       </div>
       <div class="work-row">
-        <div class="work-row__thumb"><span>Preview</span></div>
-        <div style="flex:1;min-width:0;">
-          <div class="work-row__head"><h3 class="work-row__name">A dashboard nobody had to ask for</h3><span class="work-row__year">2024</span></div>
-          <p class="work-row__outcome">Replaced three spreadsheets and a Slack channel with one view everyone trusted.</p>
-          <div class="tags"><span class="tag">Product</span><span class="tag">Data</span></div>
+        <div class="work-row__thumb work-row__thumb--shot">
+          <picture>
+            <source srcset="images/day4-website.webp" type="image/webp">
+            <img src="images/day4-website.jpg" alt="Sipped app — daily drink log" loading="lazy">
+          </picture>
         </div>
-        <span class="work-row__arrow">→</span>
+        <div class="work-row__body">
+          <div class="work-row__head"><h3 class="work-row__name">Sipped</h3><span class="work-row__year">2026</span></div>
+          <p class="work-row__outcome">A social drink-tracking app for logging coffee, water, and tea — a friends feed, a journal calendar, profile streaks, and a monthly "Wrapped" recap.</p>
+          <div class="tags"><span class="tag">Product Design</span><span class="tag">Mobile UI</span><span class="tag">Social</span></div>
+          <a class="work-row__link" href="https://sipped-liart.vercel.app/" target="_blank" rel="noopener">View live ↗</a>
+        </div>
       </div>
       <div class="work-row">
-        <div class="work-row__thumb"><span>Preview</span></div>
-        <div style="flex:1;min-width:0;">
-          <div class="work-row__head"><h3 class="work-row__name">Onboarding, rebuilt quietly</h3><span class="work-row__year">2023</span></div>
-          <p class="work-row__outcome">Shipped a new-hire flow that people actually finish, no chasing required.</p>
-          <div class="tags"><span class="tag">Process design</span></div>
+        <div class="work-row__thumb work-row__thumb--shot">
+          <picture>
+            <source srcset="images/youbetcha-landing.webp" type="image/webp">
+            <img src="images/youbetcha-landing.jpg" alt="You Betcha — Kyoto matcha brand landing page" loading="lazy">
+          </picture>
         </div>
-        <span class="work-row__arrow">→</span>
+        <div class="work-row__body">
+          <div class="work-row__head"><h3 class="work-row__name">You Betcha</h3><span class="work-row__year">2026</span></div>
+          <p class="work-row__outcome">A brand landing page for a Kyoto matcha label — ceremonial-grade powders shipped worldwide, with a shop, a sourcing story, and local collaborations.</p>
+          <div class="tags"><span class="tag">Brand Design</span><span class="tag">E-commerce</span><span class="tag">Landing Page</span></div>
+          <a class="work-row__link" href="https://you-betcha-landing.vercel.app/" target="_blank" rel="noopener">View live ↗</a>
+        </div>
+      </div>
+      <div class="work-row">
+        <div class="work-row__thumb work-row__thumb--shot">
+          <picture>
+            <source srcset="images/morning-briefing-email.webp" type="image/webp">
+            <img src="images/morning-briefing-email.jpg" alt="Morning Briefing daily digest email" loading="lazy">
+          </picture>
+        </div>
+        <div class="work-row__body">
+          <div class="work-row__head"><h3 class="work-row__name">Morning Briefing</h3><span class="work-row__year">2026</span></div>
+          <p class="work-row__outcome">An automated daily digest that pulls yesterday's signups, summarizes them with AI, and emails the team every morning on a schedule.</p>
+          <div class="tags"><span class="tag">Automation</span><span class="tag">AI</span><span class="tag">Email</span></div>
+        </div>
+      </div>
+      <div class="work-row work-row--soon">
+        <div class="work-row__thumb"><span>Soon</span></div>
+        <div class="work-row__body">
+          <div class="work-row__head"><h3 class="work-row__name">Next project</h3><span class="work-row__year">2026</span></div>
+          <p class="work-row__outcome">Something new is in the works — a new build lands here soon.</p>
+          <div class="tags"><span class="tag">Coming soon</span></div>
+        </div>
       </div>
     </div>
   </section>
@@ -382,6 +523,9 @@ a:hover{color:var(--link-hover);}
 
   <!-- ─── Footer ─── -->
   <footer class="footer">
+    <img class="footer__bg" src="assets/footer-wave.jpg" alt="" aria-hidden="true">
+    <div class="footer__tint"></div>
+    <div class="footer__overlay"></div>
     <svg class="footer__grain"><filter id="footerGrain"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" stitchTiles="stitch" result="noise"></feTurbulence><feColorMatrix in="noise" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0"></feColorMatrix></filter><rect width="100%" height="100%" filter="url(#footerGrain)"></rect></svg>
     <div class="footer__inner">
       <div class="footer__top">
@@ -398,7 +542,10 @@ a:hover{color:var(--link-hover);}
       <p class="footer__copy">© 2026 Peter Kenneth Gutiérrez. All rights reserved.</p>
 
       <a class="footer__arca" href="https://arca.ph" target="_blank" rel="noopener">
-        <img class="footer__arca-logo" src="assets/arca-logo.png" alt="Arca.ph logo" width="33" height="28">
+        <picture>
+          <source srcset="assets/arca-logo.webp" type="image/webp">
+          <img class="footer__arca-logo" src="assets/arca-logo.png" alt="Arca.ph logo" width="33" height="28" loading="lazy">
+        </picture>
         <span class="footer__arca-label">Made for Arca.ph</span>
       </a>
     </div>
@@ -408,9 +555,146 @@ a:hover{color:var(--link-hover);}
 
 <script>
 (function(){
-  // Back to top (instant — scroll effects are deferred to a later lesson)
+  var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Back to top — smooth, unless motion is reduced.
   var toTop = document.querySelector('[data-totop]');
-  if (toTop) toTop.addEventListener('click', function(){ window.scrollTo({ top: 0, behavior: 'auto' }); });
+  if (toTop) toTop.addEventListener('click', function(){
+    window.scrollTo({ top: 0, behavior: prefersReduced ? 'auto' : 'smooth' });
+  });
+
+  // ── Reveal on scroll (ezefaz-style: subtle rise + fade, premium ease) ──
+  // Fail-safe: skip entirely on reduced-motion or if IntersectionObserver is
+  // missing — elements then stay fully visible (no hidden state is applied).
+  if (prefersReduced || !('IntersectionObserver' in window)) return;
+
+  document.documentElement.classList.add('js-reveal');
+
+  // Standalone blocks — no stagger.
+  var singles = document.querySelectorAll(
+    '#about > .eyebrow, #about .about__lead, #about .btn-accent,' +
+    '#work > .eyebrow, #work > .h2, #work .work-reel,' +
+    '.skills__eyebrow, .skills__h2,' +
+    '#experience > .eyebrow, #experience > .h2,' +
+    '#education > .eyebrow, #education > .h2,' +
+    '.footer__wordmark, .footer__copy'
+  );
+  singles.forEach(function(el){ el.classList.add('reveal'); });
+
+  // Grouped blocks — subtle cascade (~80ms/item, capped).
+  ['#work .rows > .work-row',
+   '.skills__groups > .skills__group',
+   '#experience .rows > .exp-row',
+   '#education .rows > .edu-row'
+  ].forEach(function(sel){
+    document.querySelectorAll(sel).forEach(function(el, i){
+      el.classList.add('reveal');
+      el.style.transitionDelay = Math.min(i * 80, 400) + 'ms';
+    });
+  });
+
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if (entry.isIntersecting){
+        entry.target.classList.add('is-visible');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -8% 0px' });
+
+  document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
+})();
+
+// ── Pointer interactions: cursor dot, project preview, footer parallax ──
+// Fine pointers only, and never under reduced motion.
+(function(){
+  var fine = window.matchMedia('(pointer:fine)').matches;
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!fine || reduce) return;
+
+  // 1) Custom cursor dot that follows (with a little lag) and grows on hover.
+  document.documentElement.classList.add('cursor-on');
+  var dot = document.createElement('div');
+  dot.className = 'cursor-dot'; dot.setAttribute('aria-hidden','true');
+  document.body.appendChild(dot);
+  var mx = window.innerWidth/2, my = window.innerHeight/2, dx = mx, dy = my, started = false;
+  window.addEventListener('mousemove', function(e){
+    mx = e.clientX; my = e.clientY;
+    if (!started){ started = true; dot.classList.add('is-active'); }
+  });
+  document.addEventListener('mouseleave', function(){ dot.classList.remove('is-active'); });
+  document.addEventListener('mouseenter', function(){ if (started) dot.classList.add('is-active'); });
+  (function loop(){
+    dx += (mx - dx) * 0.22; dy += (my - dy) * 0.22;
+    dot.style.transform = 'translate(' + dx + 'px,' + dy + 'px) translate(-50%,-50%)';
+    requestAnimationFrame(loop);
+  })();
+  var hoverSel = 'a, button, .work-row, [data-totop]';
+  document.addEventListener('mouseover', function(e){ if (e.target.closest(hoverSel)) dot.classList.add('is-hover'); });
+  document.addEventListener('mouseout',  function(e){ if (e.target.closest(hoverSel)) dot.classList.remove('is-hover'); });
+
+  // 2) Floating screenshot preview that reveals on Work-row hover and follows the cursor.
+  var preview = document.createElement('div');
+  preview.className = 'work-preview'; preview.setAttribute('aria-hidden','true');
+  var pimg = document.createElement('img'); pimg.alt = '';
+  preview.appendChild(pimg); document.body.appendChild(preview);
+  function place(e){
+    var w = preview.offsetWidth || 280, h = preview.offsetHeight || 210;
+    var x = e.clientX + 24, y = e.clientY + 24;
+    if (x + w > window.innerWidth - 12)  x = e.clientX - 24 - w;
+    if (y + h > window.innerHeight - 12) y = window.innerHeight - 12 - h;
+    if (y < 12) y = 12;
+    preview.style.left = x + 'px'; preview.style.top = y + 'px';
+  }
+  document.querySelectorAll('#work .work-row').forEach(function(row){
+    var img = row.querySelector('.work-row__thumb img');
+    if (!img) return; // skip the "coming soon" placeholder (no screenshot)
+    row.addEventListener('mouseenter', function(e){ pimg.src = img.currentSrc || img.src; place(e); preview.classList.add('is-visible'); });
+    row.addEventListener('mousemove', place);
+    row.addEventListener('mouseleave', function(){ preview.classList.remove('is-visible'); });
+  });
+
+  // 3) Footer image follows the mouse (subtle parallax under the colour treatment).
+  var footer = document.querySelector('.footer'), fbg = document.querySelector('.footer__bg');
+  if (footer && fbg){
+    var tick = false, tx = 0, ty = 0;
+    footer.addEventListener('mousemove', function(e){
+      var r = footer.getBoundingClientRect();
+      tx = ((e.clientX - r.left) / r.width  - 0.5) * -3;
+      ty = ((e.clientY - r.top)  / r.height - 0.5) * -3;
+      if (!tick){ tick = true; requestAnimationFrame(function(){
+        fbg.style.transform = 'scale(1.08) translate(' + tx + '%,' + ty + '%)'; tick = false;
+      }); }
+    });
+    footer.addEventListener('mouseleave', function(){ fbg.style.transform = 'scale(1.08) translate(0,0)'; });
+  }
+})();
+
+// ── Deferred video playback (keeps the initial load light for FCP/LCP) ──
+// Hero plays after first paint (poster shows until then); the below-fold reel
+// only loads/plays when it nears the viewport. Skipped under reduced motion
+// (those videos are hidden / show a poster instead).
+(function(){
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  function play(v){ if (!v) return; var p = v.play(); if (p && p.catch) p.catch(function(){}); }
+
+  function whenIdle(fn){ if ('requestIdleCallback' in window) requestIdleCallback(fn, { timeout: 1800 }); else setTimeout(fn, 900); }
+  var hero = document.querySelector('.hero__video');
+  if (hero){
+    var startHero = function(){ whenIdle(function(){ play(hero); }); };
+    if (document.readyState === 'complete') startHero();
+    else window.addEventListener('load', startHero);
+  }
+
+  var reel = document.querySelector('.work-reel__video');
+  if (reel){
+    if ('IntersectionObserver' in window){
+      var io = new IntersectionObserver(function(entries){
+        entries.forEach(function(e){ if (e.isIntersecting) play(reel); else reel.pause(); });
+      }, { rootMargin: '200px 0px' });
+      io.observe(reel);
+    } else { play(reel); }
+  }
 })();
 </script>
 

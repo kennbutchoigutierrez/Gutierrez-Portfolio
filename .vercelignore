@@ -1,0 +1,12 @@
+# Internal / non-site files — keep them in the repo but out of the public deploy
+inspiration/
+drafts/
+.claude/
+*.md
+inspiration-archive.txt
+1781216728650-Arca__no_bg_.png
+
+# Unused source media (only the optimized outputs are served)
+images/*.png.png
+videos/reference.mp4
+videos/pkc-gutierrez-wave-color-graded.mp4
