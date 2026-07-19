@@ -18,13 +18,17 @@ test('loads with the correct title and no console errors', async ({ page }) => {
 });
 
 test('capstone: no contact details or social handles anywhere', async ({ page }) => {
-  const html = await page.content();
-  const banned = /mailto:|tel:|linkedin|github|twitter|x\.com|instagram|facebook|bsky|mastodon|threads/i;
-  expect(banned.test(html), 'found a contact/social term in the page source').toBeFalsy();
+  // No mailto/tel or links to social profiles. (twitter:card etc. are invisible
+  // SEO meta tags, not visible handles — the rule is about contact links/handles.)
+  const hrefs = await page.$$eval('a[href]', (as) => as.map((a) => a.getAttribute('href') || ''));
+  const badLink = /^(mailto:|tel:)|\/\/(www\.)?(linkedin|github|twitter|x|instagram|facebook|bsky|mastodon|threads)\.[a-z]/i;
+  const offenders = hrefs.filter((h) => badLink.test(h));
+  expect(offenders, `contact/social links found: ${offenders.join(', ')}`).toHaveLength(0);
 
-  // No email addresses in visible text either.
+  // No email addresses or @handles in the visible text.
   const text = await page.locator('body').innerText();
   expect(/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}/i.test(text), 'found an email address').toBeFalsy();
+  expect(/(^|\s)@[a-z0-9_]{2,}\b/i.test(text), 'found an @handle in visible text').toBeFalsy();
 });
 
 test('capstone: Arca attribution is the last footer element and links out', async ({ page }) => {
