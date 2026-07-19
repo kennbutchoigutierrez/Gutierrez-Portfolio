@@ -11,7 +11,7 @@
 <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 
-<!-- Canonical + Open Graph / Twitter (live deployed URL). -->
+<!-- Canonical + Open Graph (live deployed URL). -->
 <link rel="canonical" href="https://gutierrez-portfolio-zeta.vercel.app/">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Peter Kenneth Gutiérrez | Portfolio">
@@ -20,10 +20,6 @@
 <meta property="og:image" content="https://gutierrez-portfolio-zeta.vercel.app/images/og-card.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Peter Kenneth Gutiérrez | Portfolio">
-<meta name="twitter:description" content="From blueprints to inboxes, I build systems that run — Peter Kenneth Gutiérrez, construction estimating &amp; virtual assistance.">
-<meta name="twitter:image" content="https://gutierrez-portfolio-zeta.vercel.app/images/og-card.png">
 
 <!-- Fonts: Newsreader (display serif), Karla (body), Space Mono (labels) — the design-system faces -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -108,18 +104,20 @@ a:hover{color:var(--link-hover);}
   padding:12px clamp(8px,2vw,14px) 12px clamp(14px,4vw,24px);
   box-shadow:var(--shadow-card);max-width:94vw;
 }
-.nav__brand{font-family:var(--font-display);font-style:italic;font-weight:500;font-size:18px;color:var(--text-body);white-space:nowrap;}
+.nav__brand{font-family:var(--font-display);font-style:italic;font-weight:500;font-size:18px;color:var(--text-body);white-space:nowrap;cursor:pointer;transition:color var(--duration-fast) var(--ease-quiet);}
+.nav__brand:hover{color:var(--color-tan);}
 .nav__links{display:flex;gap:22px;}
 .nav__link{font-family:var(--font-mono);font-size:12px;letter-spacing:1.4px;text-transform:uppercase;color:var(--text-muted);white-space:nowrap;}
 .nav__link:hover{color:var(--text-body);}
 .nav__resume{
+  display:inline-flex;align-items:center;
   font-family:var(--font-mono);font-size:12px;letter-spacing:1.4px;text-transform:uppercase;
   padding:8px 18px;border:none;border-radius:var(--radius-pill);
   background:var(--color-ink);color:var(--color-on-anchor);cursor:pointer;
   transition:background var(--duration-fast) var(--ease-quiet);
 }
 .nav__resume:hover{background:var(--color-anchor);color:var(--color-on-anchor);}
-@media (max-width:680px){.nav__links{display:none;}}
+@media (max-width:680px){.nav__links{display:none;}.nav__resume{min-height:44px;padding:8px 20px;}}
 
 /* ─── Hero ─────────────────────────────────────────────────────────────── */
 .hero{position:relative;isolation:isolate;min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:140px 48px 96px;background:var(--color-anchor-deep);}
@@ -188,7 +186,7 @@ a:hover{color:var(--link-hover);}
 .work-row__outcome{font-family:var(--font-body);font-size:17px;line-height:1.6;color:var(--text-muted);margin:10px 0 16px;max-width:560px;}
 .tags{display:flex;gap:8px;flex-wrap:wrap;}
 .tag{font-family:var(--font-mono);font-size:11px;letter-spacing:1.2px;text-transform:uppercase;color:var(--text-muted);border:1px solid var(--border-default);border-radius:var(--radius-pill);padding:5px 12px;}
-.work-row__link{display:inline-flex;align-items:center;gap:7px;margin-top:16px;font-family:var(--font-mono);font-size:12px;letter-spacing:1.3px;text-transform:uppercase;color:var(--color-accent-2);border-bottom:1px solid transparent;padding-bottom:2px;transition:color var(--duration-fast) var(--ease-quiet),border-color var(--duration-fast) var(--ease-quiet);}
+.work-row__link{display:inline-flex;align-items:center;min-height:44px;gap:7px;margin-top:10px;font-family:var(--font-mono);font-size:12px;letter-spacing:1.3px;text-transform:uppercase;color:var(--color-accent-2);border-bottom:1px solid transparent;transition:color var(--duration-fast) var(--ease-quiet),border-color var(--duration-fast) var(--ease-quiet);}
 .work-row__link:hover{color:var(--color-accent-2-strong);border-color:var(--color-accent-2-strong);}
 .work-row--soon{opacity:0.7;}
 /* Autoplay project reel at the top of Work */
@@ -245,7 +243,7 @@ a:hover{color:var(--link-hover);}
 .footer__inner{position:relative;z-index:4;max-width:1140px;margin:0 auto;}
 .footer__top{display:flex;flex-wrap:wrap;justify-content:space-between;gap:48px;padding-bottom:64px;border-bottom:1px solid rgba(243,236,218,0.14);}
 .footer__links{display:flex;gap:40px;flex-wrap:wrap;}
-.footer__link{font-family:var(--font-body);font-size:15px;color:var(--text-on-dark);opacity:0.85;}
+.footer__link{display:inline-flex;align-items:center;min-height:44px;font-family:var(--font-body);font-size:15px;color:var(--text-on-dark);opacity:0.85;}
 .footer__link:hover{color:var(--text-on-dark);opacity:1;}
 .footer__totop{width:44px;height:44px;border-radius:50%;border:1px solid var(--color-accent);background:var(--color-accent);color:var(--color-on-accent);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background var(--duration-fast) var(--ease-quiet);}
 .footer__totop:hover{background:var(--color-accent-strong);}
@@ -291,7 +289,7 @@ html.js-reveal .reveal.is-visible{opacity:1;transform:none;}
 
   <!-- ─── Nav ─── -->
   <nav class="nav">
-    <span class="nav__brand">PKC Gutiérrez</span>
+    <a class="nav__brand" href="#top" aria-label="Back to top">PKC Gutiérrez</a>
     <div class="nav__links">
       <a class="nav__link" href="#work">Work</a>
       <a class="nav__link" href="#skills">Skills</a>
@@ -301,7 +299,7 @@ html.js-reveal .reveal.is-visible{opacity:1;transform:none;}
   </nav>
 
   <!-- ─── Hero ─── -->
-  <section class="hero">
+  <section class="hero" id="top">
     <div class="hero__grad"></div>
     <video class="hero__video" muted loop playsinline preload="none" poster="assets/hero-poster.jpg" aria-hidden="true">
       <source src="videos/hero-wave.webm" type="video/webm">
