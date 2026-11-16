@@ -194,7 +194,6 @@ a:hover{color:var(--link-hover);}
 .tag{font-family:var(--font-mono);font-size:11px;letter-spacing:1.2px;text-transform:uppercase;color:var(--text-muted);border:1px solid var(--border-default);border-radius:var(--radius-pill);padding:5px 12px;}
 .work-row__link{display:inline-flex;align-items:center;min-height:44px;gap:7px;margin-top:10px;font-family:var(--font-mono);font-size:12px;letter-spacing:1.3px;text-transform:uppercase;color:var(--color-accent-2);border-bottom:1px solid transparent;transition:color var(--duration-fast) var(--ease-quiet),border-color var(--duration-fast) var(--ease-quiet);}
 .work-row__link:hover{color:var(--color-accent-2-strong);border-color:var(--color-accent-2-strong);}
-.work-row--soon{opacity:0.7;}
 /* Autoplay project reel at the top of Work */
 .work-reel{position:relative;margin:8px 0 52px;border-radius:var(--radius-md);overflow:hidden;border:1px solid var(--border-default);box-shadow:var(--shadow-raised);background:var(--color-paper-deep);aspect-ratio:16/9;}
 .work-reel__video,.work-reel__poster{display:block;width:100%;height:100%;object-fit:cover;}
@@ -363,6 +362,27 @@ html.js-reveal .reveal.is-visible{opacity:1;transform:none;}
     <div class="rows">
       <div class="work-row">
         <div class="work-row__thumb work-row__thumb--shot">
+          <img src="images/trueline-funnel.png" alt="Trueline Roof Care website and lead-generation funnel" loading="lazy" style="object-position:center">
+        </div>
+        <div class="work-row__body">
+          <div class="work-row__head"><h3 class="work-row__name">Trueline Roof Care</h3><span class="work-row__year">2026</span></div>
+          <p class="work-row__outcome">An end-to-end lead-acquisition demo for a fictional roofing company: a custom website and funnel, segmented intake form, booking calendar, six-stage CRM pipeline, branded emails, and four GoHighLevel workflow structures for lead response and follow-up.</p>
+          <div class="tags"><span class="tag">Funnel Strategy</span><span class="tag">GoHighLevel</span><span class="tag">CRM Automation</span></div>
+          <a class="work-row__link" href="https://trueline-roof-care.vercel.app/" target="_blank" rel="noopener">View live ↗</a>
+        </div>
+      </div>
+      <div class="work-row">
+        <div class="work-row__thumb work-row__thumb--shot">
+          <img src="images/trueline-meta-ads.png" alt="Trueline Roof Care Meta advertising creative" loading="lazy" style="object-position:center">
+        </div>
+        <div class="work-row__body">
+          <div class="work-row__head"><h3 class="work-row__name">Trueline Meta Ad System</h3><span class="work-row__year">2026</span></div>
+          <p class="work-row__outcome">Four Meta ad concepts and a nine-slide educational carousel for the Trueline demo, built around distinct campaign angles and rendered from one HTML/CSS source into feed, square, and story formats. The campaign was assembled in Ads Manager and kept in draft.</p>
+          <div class="tags"><span class="tag">Meta Ads</span><span class="tag">Creative Production</span><span class="tag">Ad Copywriting</span></div>
+        </div>
+      </div>
+      <div class="work-row">
+        <div class="work-row__thumb work-row__thumb--shot">
           <picture>
             <source srcset="images/freelanceflow-landing.webp" type="image/webp">
             <img src="images/freelanceflow-landing.jpg" alt="FreelanceFlow landing page" loading="lazy">
@@ -430,14 +450,6 @@ html.js-reveal .reveal.is-visible{opacity:1;transform:none;}
           <div class="tags"><span class="tag">Automation</span><span class="tag">AI</span><span class="tag">Email</span></div>
         </div>
       </div>
-      <div class="work-row work-row--soon">
-        <div class="work-row__thumb"><span>Soon</span></div>
-        <div class="work-row__body">
-          <div class="work-row__head"><h3 class="work-row__name">Next project</h3><span class="work-row__year">2026</span></div>
-          <p class="work-row__outcome">Something new is in the works — a new build lands here soon.</p>
-          <div class="tags"><span class="tag">Coming soon</span></div>
-        </div>
-      </div>
     </div>
   </section>
 
@@ -448,28 +460,39 @@ html.js-reveal .reveal.is-visible{opacity:1;transform:none;}
       <h2 class="skills__h2">What I reach for</h2>
       <div class="skills__groups">
         <div class="skills__group">
-          <h3 class="skills__cat">Estimating &amp; Technical</h3>
+          <h3 class="skills__cat">Estimating &amp; Operations</h3>
           <div class="skills__grid">
             <span class="skill-pill">Material take-offs</span>
             <span class="skill-pill">Code compliance</span>
+            <span class="skill-pill">Inventory &amp; pricing systems</span>
             <span class="skill-pill">Technical documentation</span>
-            <span class="skill-pill">AI estimating tools</span>
           </div>
         </div>
         <div class="skills__group">
-          <h3 class="skills__cat">AI &amp; Data</h3>
+          <h3 class="skills__cat">Automation &amp; CRM</h3>
           <div class="skills__grid">
-            <span class="skill-pill">Machine learning</span>
-            <span class="skill-pill">CNN / deep learning</span>
-            <span class="skill-pill">AI literacy</span>
+            <span class="skill-pill">GoHighLevel</span>
+            <span class="skill-pill">n8n &amp; Make</span>
+            <span class="skill-pill">CRM pipeline design</span>
+            <span class="skill-pill">Email &amp; workflow automation</span>
           </div>
         </div>
         <div class="skills__group">
-          <h3 class="skills__cat">Virtual Assistance</h3>
+          <h3 class="skills__cat">Web &amp; Product</h3>
           <div class="skills__grid">
-            <span class="skill-pill">Inbox &amp; workflow support</span>
-            <span class="skill-pill">Documentation</span>
-            <span class="skill-pill">MS Office mastery</span>
+            <span class="skill-pill">HTML, CSS &amp; JavaScript</span>
+            <span class="skill-pill">React &amp; Next.js</span>
+            <span class="skill-pill">Supabase &amp; serverless APIs</span>
+            <span class="skill-pill">Product design</span>
+          </div>
+        </div>
+        <div class="skills__group">
+          <h3 class="skills__cat">Growth &amp; Creative</h3>
+          <div class="skills__grid">
+            <span class="skill-pill">Funnel strategy</span>
+            <span class="skill-pill">Meta ad creative</span>
+            <span class="skill-pill">Landing-page copy</span>
+            <span class="skill-pill">Multi-format content</span>
           </div>
         </div>
       </div>
