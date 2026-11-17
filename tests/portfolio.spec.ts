@@ -57,6 +57,16 @@ test('work section shows real projects with live links', async ({ page }) => {
     .toHaveAttribute('target', '_blank');
 });
 
+test('Sipped app and pitch deck are presented as separate projects', async ({ page }) => {
+  const app = page.locator('.work-row', { hasText: 'Sipped — Social Drink Journal' });
+  const deck = page.locator('.work-row', { hasText: 'Sipped Pitch Deck' });
+
+  await expect(app).toHaveCount(1);
+  await expect(app.locator('.work-row__link')).toHaveAttribute('href', 'https://sipped-liart.vercel.app/');
+  await expect(deck).toHaveCount(1);
+  await expect(deck.locator('.work-row__link')).toHaveAttribute('href', 'https://sipped-pitch-deck.vercel.app/#1');
+});
+
 test('no horizontal scroll at this viewport', async ({ page }) => {
   // Scroll through so lazy/reveal content settles, then measure.
   await page.evaluate(async () => {
