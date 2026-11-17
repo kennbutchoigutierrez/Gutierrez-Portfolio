@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="PKG Motion Lab — selected video editing, AI-assisted podcast, and generative UGC work by Peter Kenneth Gutierrez.">
+  <title>PKG Motion Lab — Selected Video Work</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 64 64%22><rect width=%2264%22 height=%2264%22 rx=%2210%22 fill=%22%2307080a%22/><path d=%22M20 16h17c9 0 14 5 14 13s-5 13-14 13h-7v8H20V16zm10 9v8h6c3 0 5-1 5-4s-2-4-5-4h-6z%22 fill=%22%232d63ff%22/><circle cx=%2250%22 cy=%2250%22 r=%226%22 fill=%22%23ff5c35%22/></svg>">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="masthead">
+    <a class="brand" href="#top"><span>PKG</span> Motion Lab</a>
+    <p>Selected moving-image work · 2026</p>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="hero__copy">
+        <p class="edition">Edit / generate / finish</p>
+        <h1>Motion that earns the next second.</h1>
+        <p class="lede">Three short-form studies across retention editing, podcast storytelling, and AI-generated UGC—selected, finished, and packaged for a vertical-first feed.</p>
+        <button id="screenBtn" class="screen-btn">Enter the screening room</button>
+      </div>
+      <div class="hero__contact" aria-hidden="true">
+        <figure class="strip strip--a"><img src="media/clipping-poster.jpg" alt=""><i></i></figure>
+        <figure class="strip strip--b"><img src="media/podcast-poster.jpg" alt=""><i></i></figure>
+        <figure class="strip strip--c"><img src="media/ugc-poster.jpg" alt=""><i></i></figure>
+        <span class="timecode">00:00:45:05</span>
+      </div>
+    </section>
+
+    <section class="screening" id="screening" aria-labelledby="screeningTitle">
+      <div class="screening__intro">
+        <p>Now screening</p>
+        <h2 id="screeningTitle">Three formats. One editorial point of view.</h2>
+        <div class="screening__count"><strong id="activeNumber">01</strong><span>/ 03</span></div>
+      </div>
+
+      <div class="screening__grid">
+        <nav class="playlist" aria-label="Selected videos">
+          <button class="playlist__item active" data-film="0">
+            <span>01</span><div><b>Always Pack</b><small>Clipping & retention edit</small></div><i>16.3s</i>
+          </button>
+          <button class="playlist__item" data-film="1">
+            <span>02</span><div><b>Believe in Yourself</b><small>AI-assisted podcast clip</small></div><i>14.2s</i>
+          </button>
+          <button class="playlist__item" data-film="2">
+            <span>03</span><div><b>The Remote-Work Sitcom</b><small>AI-generated UGC</small></div><i>14.7s</i>
+          </button>
+        </nav>
+
+        <div class="monitor-wrap">
+          <div class="monitor monitor--vertical" id="monitor">
+            <video id="film" controls playsinline preload="metadata" poster="media/clipping-poster.jpg">
+              <source src="media/clipping.mp4" type="video/mp4">
+            </video>
+            <button class="big-play" id="bigPlay" aria-label="Play Always Pack"><span>▶</span></button>
+          </div>
+          <div class="transport" aria-hidden="true"><span>REC</span><div></div><code id="runtime">00:16:09</code></div>
+        </div>
+
+        <article class="film-notes">
+          <p id="filmType">Clipping & retention edit</p>
+          <h3 id="filmTitle">Always Pack</h3>
+          <p id="filmDescription">A raw portable-fan montage reshaped into a feed-ready short with a fast opening promise, timed captions, music, sound design, and a branded close.</p>
+          <dl>
+            <div><dt>Format</dt><dd id="filmFormat">9:16 · 1080×1920 master</dd></div>
+            <div><dt>Focus</dt><dd id="filmFocus">Hook design · pacing · captions</dd></div>
+            <div><dt>Role</dt><dd id="filmRole">Editor · motion finish</dd></div>
+          </dl>
+          <button class="next-film" id="nextFilm">Next film <span>02</span></button>
+        </article>
+      </div>
+    </section>
+
+    <section class="craft" aria-labelledby="craftTitle">
+      <div class="craft__heading"><p>The edit bench</p><h2 id="craftTitle">What the work is solving.</h2></div>
+      <div class="craft__track">
+        <article><span>Hook</span><h3>Make the first frame legible.</h3><p>The viewer should understand the promise before the scroll wins.</p></article>
+        <article><span>Rhythm</span><h3>Cut around attention, not software.</h3><p>Pauses, captions, sound hits, and shot changes serve the idea.</p></article>
+        <article><span>Continuity</span><h3>Keep generated scenes coherent.</h3><p>Characters, wardrobe, setting, and tone stay recognizable across shots.</p></article>
+        <article><span>Finish</span><h3>Deliver for the actual feed.</h3><p>Vertical framing, readable type, clean audio, and a purposeful last frame.</p></article>
+      </div>
+    </section>
+
+    <section class="credits">
+      <p>PKG Motion Lab is the moving-image practice of Peter Kenneth Gutierrez.</p>
+      <div><span>Video editing</span><span>Motion finishing</span><span>AI-assisted production</span></div>
+    </section>
+  </main>
+
+  <footer><span>PKG / ML</span><a href="#top">Return to start</a></footer>
+  <script src="app.js"></script>
+</body>
+</html>
