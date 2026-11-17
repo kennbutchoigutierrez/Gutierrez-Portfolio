@@ -74,6 +74,13 @@ test('GAOC communication workflow is linked as a live portfolio concept', async 
   await expect(project.locator('.work-row__link')).toHaveAttribute('href', 'https://gaoc-outbound-nurture-demo.vercel.app/');
 });
 
+test('Grumpy Momtcha print commission links to both final colorways', async ({ page }) => {
+  const project = page.locator('.work-row', { hasText: 'Grumpy Momtcha Review Print' });
+  await expect(project).toHaveCount(1);
+  await expect(project).toContainText('commissioned printable Google review prompt');
+  await expect(project.locator('.work-row__link')).toHaveAttribute('href', 'https://grumpy-momtcha-review-design.vercel.app/');
+});
+
 test('no horizontal scroll at this viewport', async ({ page }) => {
   // Scroll through so lazy/reveal content settles, then measure.
   await page.evaluate(async () => {
