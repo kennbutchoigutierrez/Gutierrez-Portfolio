@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Signal Ledger is a public demonstration of an approval-gated, evidence-aware content operations system by Peter Kenneth Gutierrez.">
+  <title>Signal Ledger — Approval-Gated Content Operations</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip" href="#reviewDesk">Skip to review desk</a>
+  <header class="masthead">
+    <a class="wordmark" href="#top" aria-label="Signal Ledger home"><span>SL</span> Signal Ledger</a>
+    <div class="masthead-note"><i></i> Public demonstration · synthetic records</div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="hero-copy">
+        <p class="kicker">Content operations with a human stop built in</p>
+        <h1>Research moves fast. Publishing waits for proof.</h1>
+        <p class="lede">A cross-platform workflow that turns source material into original drafts, preserves the evidence behind each decision, and stops before the irreversible action.</p>
+        <button class="primary" id="enterDesk">Review a sample draft</button>
+      </div>
+      <div class="proof-board" aria-label="Five-stage approval workflow">
+        <div class="route-line" aria-hidden="true"></div>
+        <article class="route-step done"><span>01</span><div><b>Collect</b><small>Capture qualified source material</small></div></article>
+        <article class="route-step done"><span>02</span><div><b>Qualify</b><small>Exclude weak or disallowed inputs</small></div></article>
+        <article class="route-step done"><span>03</span><div><b>Draft</b><small>Create an original, scoped response</small></div></article>
+        <article class="route-step active"><span>04</span><div><b>Review</b><small>Inspect evidence, claims, and fit</small></div></article>
+        <article class="route-step locked"><span>05</span><div><b>Publish</b><small>Locked until a person confirms</small></div></article>
+        <div class="hold-stamp">Human<br>checkpoint</div>
+      </div>
+    </section>
+
+    <section class="system-facts" aria-label="Documented system facts">
+      <div><strong>66</strong><span>Reddit draft records</span></div>
+      <div><strong>180</strong><span>Source records in a verified X run</span></div>
+      <div><strong>3</strong><span>LinkedIn series posts prepared</span></div>
+      <div><strong>0</strong><span>Unattended publishing actions</span></div>
+    </section>
+
+    <section class="desk" id="reviewDesk">
+      <header class="desk-head">
+        <div>
+          <p>Interactive case study</p>
+          <h2>The approval desk</h2>
+        </div>
+        <div class="desk-legend"><span><i class="dot orange"></i>Needs review</span><span><i class="dot green"></i>Ready</span><span><i class="dot grey"></i>Returned</span></div>
+      </header>
+
+      <div class="desk-shell">
+        <aside class="queue-panel" aria-label="Synthetic review queue">
+          <div class="queue-toolbar">
+            <strong>Review queue</strong>
+            <span id="queueCount">3 items</span>
+          </div>
+          <div class="channel-tabs" role="tablist" aria-label="Filter by channel">
+            <button class="channel active" data-channel="all" role="tab" aria-selected="true">All</button>
+            <button class="channel" data-channel="community" role="tab" aria-selected="false">Community</button>
+            <button class="channel" data-channel="short" role="tab" aria-selected="false">Short-form</button>
+            <button class="channel" data-channel="professional" role="tab" aria-selected="false">Professional</button>
+          </div>
+          <div id="queue" class="queue"></div>
+        </aside>
+
+        <article class="review-panel" aria-live="polite">
+          <header class="review-title">
+            <div>
+              <span id="draftChannel" class="channel-label">Community</span>
+              <h3 id="draftTitle"></h3>
+            </div>
+            <span id="draftStatus" class="status needs-review">Needs review</span>
+          </header>
+
+          <div class="draft-body" id="draftBody"></div>
+
+          <div class="review-tabs" role="tablist" aria-label="Review evidence">
+            <button class="review-tab active" data-panel="evidence" role="tab" aria-selected="true">Evidence packet</button>
+            <button class="review-tab" data-panel="guardrails" role="tab" aria-selected="false">Guardrails</button>
+          </div>
+          <section class="evidence-panel" id="evidencePanel"></section>
+          <section class="guardrail-panel" id="guardrailPanel" hidden></section>
+
+          <div class="decision">
+            <div class="decision-copy"><b>Decision remains local</b><span>This demo never contacts or publishes to a social platform.</span></div>
+            <div class="decision-actions">
+              <button class="secondary" id="returnDraft">Return with note</button>
+              <button class="approve" id="approveDraft">Mark ready</button>
+            </div>
+          </div>
+        </article>
+
+        <aside class="audit-panel">
+          <div class="audit-head"><strong>Decision log</strong><button id="resetDemo">Reset demo</button></div>
+          <ol id="auditLog" class="audit-log"></ol>
+          <div class="control-note">
+            <span>Control boundary</span>
+            <p>Research and drafting may run automatically. Account access and the final publish action stay outside the unattended workflow.</p>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="architecture">
+      <div class="architecture-copy">
+        <p>System design</p>
+        <h2>Automation handles repetition. People retain judgment.</h2>
+        <p>The production exercise used scheduled research, structured local records, originality checks, channel-specific drafting, and explicit confirmation. This public version recreates the decision surface with synthetic content.</p>
+      </div>
+      <div class="architecture-map" aria-label="System architecture">
+        <div class="map-node"><span>Inputs</span><b>Qualified feeds</b><small>Rules, source snapshots, exclusions</small></div>
+        <div class="map-arrow" aria-hidden="true">→</div>
+        <div class="map-node"><span>Automation</span><b>Draft engine</b><small>Originality, fit, disclosure</small></div>
+        <div class="map-arrow" aria-hidden="true">→</div>
+        <div class="map-node gate"><span>Control</span><b>Human review</b><small>Approve, return, or stop</small></div>
+        <div class="map-arrow locked-arrow" aria-hidden="true">⇢</div>
+        <div class="map-node muted"><span>External action</span><b>Publish</b><small>Never unattended</small></div>
+      </div>
+    </section>
+
+    <section class="case-note">
+      <p>Built from a private course-sandbox workflow. Public records are synthetic and no credentials, raw databases, or private account data are included.</p>
+      <a href="#reviewDesk">Return to the review desk</a>
+    </section>
+  </main>
+
+  <footer><span>Peter Kenneth Gutierrez · 2026</span><span>Approval-gated content operations</span></footer>
+  <script src="app.js"></script>
+</body>
+</html>
