@@ -67,6 +67,13 @@ test('Sipped app and pitch deck are presented as separate projects', async ({ pa
   await expect(deck.locator('.work-row__link')).toHaveAttribute('href', 'https://sipped-pitch-deck.vercel.app/#1');
 });
 
+test('GAOC communication workflow is linked as a live portfolio concept', async ({ page }) => {
+  const project = page.locator('.work-row', { hasText: 'GAOC Outbound + Patient Nurture' });
+  await expect(project).toHaveCount(1);
+  await expect(project).toContainText('portfolio concept');
+  await expect(project.locator('.work-row__link')).toHaveAttribute('href', 'https://gaoc-outbound-nurture-demo.vercel.app/');
+});
+
 test('no horizontal scroll at this viewport', async ({ page }) => {
   // Scroll through so lazy/reveal content settles, then measure.
   await page.evaluate(async () => {
