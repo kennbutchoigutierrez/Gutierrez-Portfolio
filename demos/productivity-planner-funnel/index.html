@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="An interactive, synthetic walkthrough of The Productivity Planner acquisition funnel.">
+  <title>The Productivity Planner — Funnel Walkthrough</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 64 64%22><rect width=%2264%22 height=%2264%22 rx=%2212%22 fill=%22%23011126%22/><path d=%22M18 19h28v6H18zm0 12h22v6H18zm0 12h16v6H18z%22 fill=%22%23d9b596%22/></svg>">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="wordmark" href="#top" aria-label="Productivity Planner funnel home">THE PRODUCTIVITY PLANNER</a>
+    <p class="status"><span></span> Interactive case study · synthetic data</p>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="hero__copy">
+        <p class="kicker">Acquisition system / 2026</p>
+        <h1>Watch one lead move from <em>scroll</em> to <em>sale.</em></h1>
+        <p class="hero__lede">A public walkthrough of the ad, free checklist, CRM handoff, nurture sequence, $20 planner offer, and $9 order bump—without collecting real data or processing a payment.</p>
+        <button class="primary" id="startBtn">Run the funnel <span>→</span></button>
+      </div>
+      <div class="hero__sheet" aria-hidden="true">
+        <div class="sheet__tape"></div>
+        <p>WEEK OF <b>MON 17</b></p>
+        <h2>Three outcomes. One calm week.</h2>
+        <ol><li>Ship the client proposal</li><li>Automate invoice follow-up</li><li>Protect Friday review</li></ol>
+        <div class="scribble">Plan once → execute daily</div>
+      </div>
+    </section>
+
+    <section class="journey" id="journey" aria-labelledby="journeyTitle">
+      <div class="journey__header">
+        <div><p class="kicker">Live simulation</p><h2 id="journeyTitle">A funnel you can inspect</h2></div>
+        <p>Use the stage rail or continue button. All names, events, and forecasts are illustrative.</p>
+      </div>
+
+      <div class="funnel-shell">
+        <nav class="stage-rail" aria-label="Funnel stages">
+          <button class="stage active" data-stage="0"><b>01</b><span>Draft ad<small>Traffic</small></span></button>
+          <button class="stage" data-stage="1"><b>02</b><span>Free checklist<small>Opt-in</small></span></button>
+          <button class="stage" data-stage="2"><b>03</b><span>CRM handoff<small>Lead captured</small></span></button>
+          <button class="stage" data-stage="3"><b>04</b><span>Nurture<small>3-email sequence</small></span></button>
+          <button class="stage" data-stage="4"><b>05</b><span>Planner offer<small>$20 product</small></span></button>
+          <button class="stage" data-stage="5"><b>06</b><span>Test checkout<small>$9 bump</small></span></button>
+        </nav>
+
+        <div class="stage-view" aria-live="polite">
+          <div class="view-topline"><span id="stageLabel">STAGE 01 / TRAFFIC</span><button class="reset" id="resetBtn">Reset lead</button></div>
+          <div id="panel" class="panel"></div>
+          <div class="view-actions"><p id="stageNote">Draft campaign · no spend or results claimed</p><button class="primary primary--small" id="nextBtn">Open the checklist <span>→</span></button></div>
+        </div>
+
+        <aside class="ledger">
+          <div class="lead-card"><span class="avatar">AM</span><div><b>Alex Morgan</b><small id="leadStatus">Anonymous visitor</small></div></div>
+          <div class="ledger__title"><span>EVENT LEDGER</span><span class="pulse"></span></div>
+          <ol id="eventLog"><li class="empty">Run the journey to record events.</li></ol>
+          <div class="metric"><span>Opportunity value</span><strong id="value">$0</strong></div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="system-map" aria-labelledby="mapTitle">
+      <div><p class="kicker">System architecture</p><h2 id="mapTitle">Two funnels. One coherent handoff.</h2></div>
+      <div class="map">
+        <article><b>01</b><h3>Acquire</h3><p>Draft Meta creative points to a free, single-purpose checklist.</p></article>
+        <span>→</span><article><b>02</b><h3>Capture</h3><p>Email submission creates the contact, tag, and New Leads opportunity.</p></article>
+        <span>→</span><article><b>03</b><h3>Nurture</h3><p>Two useful emails earn the right to introduce the paid planner.</p></article>
+        <span>→</span><article><b>04</b><h3>Convert</h3><p>A $20 digital planner with one transparent $9 order bump.</p></article>
+      </div>
+    </section>
+
+    <section class="truth" aria-labelledby="truthTitle">
+      <div class="truth__intro"><p class="kicker">Truth boundary</p><h2 id="truthTitle">What exists—and what is not being claimed.</h2><p>This case study presents the designed system and its public artifacts accurately. It does not turn unfinished account-side work into a result.</p></div>
+      <div class="truth__cols">
+        <article class="built"><h3><span>✓</span> Built artifacts</h3><ul><li>Planner and habit tracker PDFs</li><li>Lead magnet and ad creative</li><li>Opt-in and sales-page copy</li><li>Three-email nurture sequence</li><li>ClickFunnels page structure</li><li>CRM pipeline architecture</li></ul></article>
+        <article class="boundary"><h3><span>—</span> Not claimed</h3><ul><li>No real conversions or revenue</li><li>No published Meta campaign</li><li>No live payment processing here</li><li>No claim of a completed account-side E2E test</li><li>No real prospect information stored</li></ul></article>
+      </div>
+    </section>
+  </main>
+
+  <footer><p>Built as a public case-study environment by Peter Kenneth Gutierrez.</p><a href="#top">Back to top ↑</a></footer>
+  <script src="app.js"></script>
+</body>
+</html>
