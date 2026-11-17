@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Interactive public demo of an accounts receivable automation suite: CRM-to-invoice workflow and Excel aging-report engine.">
+  <title>Accounts Receivable Automation Suite</title>
+  <style>
+    *,*::before,*::after{box-sizing:border-box}
+    :root{
+      --paper:#f6f7fa;--sheet:#fff;--ink:#172033;--muted:#667084;--quiet:#8e97a8;
+      --line:#d9deea;--line-strong:#bcc5d6;--blue:#2855b6;--blue-soft:#eaf0ff;
+      --green:#187b58;--green-soft:#e8f6f0;--amber:#a8670f;--amber-soft:#fff4de;
+      --shadow:0 18px 50px rgba(23,32,51,.11);--radius:16px;color-scheme:light;
+    }
+    html{scroll-behavior:smooth}
+    body{margin:0;background:var(--paper);color:var(--ink);font:15px/1.55 Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
+    button,a{font:inherit}
+    button:focus-visible,a:focus-visible{outline:3px solid rgba(40,85,182,.28);outline-offset:3px}
+    .wrap{width:min(1180px,calc(100% - 40px));margin:0 auto}
+    .topbar{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:24px 0;border-bottom:1px solid var(--line)}
+    .brand{display:flex;align-items:center;gap:11px;font-weight:720;letter-spacing:-.015em}
+    .brand-mark{display:grid;place-items:center;width:34px;height:34px;border-radius:9px;background:var(--ink);color:#fff;font-size:17px}
+    .top-links{display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:flex-end}.top-link{display:inline-flex;align-items:center;min-height:42px;padding:0 15px;border:1px solid var(--line-strong);border-radius:10px;color:var(--ink);text-decoration:none;background:#fff;font-weight:620}
+    .hero{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(390px,.95fr);gap:64px;align-items:center;padding:72px 0 60px}
+    .kicker{margin:0 0 16px;color:var(--blue);font-size:14px;font-weight:700}
+    h1{max-width:760px;margin:0;font-size:clamp(48px,7vw,86px);line-height:.98;letter-spacing:-.062em;font-weight:760}
+    .lead{max-width:650px;margin:26px 0 0;color:var(--muted);font-size:clamp(17px,2vw,20px);line-height:1.6}
+    .hero-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:30px}
+    .button{border:0;border-radius:11px;min-height:46px;padding:0 18px;cursor:pointer;font-weight:700}
+    .button-primary{background:var(--blue);color:#fff;box-shadow:0 7px 18px rgba(40,85,182,.22)}
+    .button-secondary{background:#fff;color:var(--ink);border:1px solid var(--line-strong)}
+    .button:disabled{cursor:not-allowed;opacity:.62;box-shadow:none}
+    .proof{display:grid;grid-template-columns:repeat(4,1fr);margin-top:38px;border:1px solid var(--line);border-radius:13px;overflow:hidden;background:rgba(255,255,255,.64)}
+    .proof-item{padding:16px 18px;border-right:1px solid var(--line)}
+    .proof-item:last-child{border-right:0}
+    .proof-item b{display:block;font-size:18px;letter-spacing:-.025em}
+    .proof-item span{display:block;margin-top:2px;color:var(--muted);font-size:12px}
+    .invoice-shell{position:relative;padding:18px;border:1px solid var(--line);border-radius:22px;background:#e8ebf2;box-shadow:var(--shadow);transform:rotate(1deg)}
+    .invoice-shell::before{content:"Synthetic demo";position:absolute;right:-10px;top:-15px;padding:7px 11px;border-radius:8px;background:var(--amber-soft);border:1px solid #e7bf79;color:var(--amber);font-size:12px;font-weight:700;transform:rotate(2deg)}
+    .invoice{min-height:540px;padding:34px;background:var(--sheet);border-radius:10px;box-shadow:0 2px 6px rgba(23,32,51,.07)}
+    .invoice-head{display:flex;justify-content:space-between;gap:20px;padding-bottom:23px;border-bottom:3px solid var(--blue)}
+    .invoice-logo{font-size:18px;font-weight:780}.invoice-title{margin-top:5px;color:var(--blue);font-size:38px;font-weight:780;letter-spacing:.015em}
+    .invoice-meta{text-align:right;font-size:12px;color:var(--muted)}.invoice-meta b{color:var(--ink)}
+    .bill-grid{display:grid;grid-template-columns:1fr 1fr;gap:34px;margin:27px 0 44px}.bill-grid h3{margin:0 0 5px;color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.06em}.bill-grid p{margin:0}.bill-grid strong{font-size:14px}
+    .invoice-table{width:100%;border-collapse:collapse;font-size:12px}.invoice-table th{text-align:left;color:var(--muted);font-size:10px}.invoice-table th:nth-child(n+2),.invoice-table td:nth-child(n+2){text-align:right}.invoice-table th,.invoice-table td{padding:9px 0;border-bottom:1px solid var(--line)}
+    .totals{width:60%;margin:26px 0 0 auto;padding:17px;background:#f3f5f9}.total-row{display:flex;justify-content:space-between;gap:20px;color:var(--muted);font-size:12px}.total-row+.total-row{margin-top:6px}.total-row.final{margin-top:10px;padding-top:10px;border-top:1px solid var(--line-strong);color:var(--ink);font-size:17px;font-weight:800}
+    .privacy{display:flex;gap:10px;align-items:flex-start;padding:13px 15px;border:1px solid #e6c27f;border-radius:11px;background:var(--amber-soft);color:#79511a;font-size:13px}.privacy b{white-space:nowrap;color:#5c3909}
+    .sim-section{padding:28px 0 78px}
+    .sim-card{padding:34px;border:1px solid var(--line);border-radius:22px;background:#fff;box-shadow:0 14px 38px rgba(23,32,51,.07)}
+    .sim-head{display:flex;justify-content:space-between;align-items:flex-start;gap:24px;margin-bottom:28px}.sim-head h2,.section-head h2{margin:0;font-size:clamp(28px,4vw,42px);line-height:1.08;letter-spacing:-.045em}.sim-head p,.section-head p{max-width:660px;margin:9px 0 0;color:var(--muted)}
+    .record{display:grid;grid-template-columns:1.1fr .8fr .65fr .75fr;gap:0;border:1px solid var(--line);border-radius:13px;overflow:hidden;background:#fafbfc}
+    .record-cell{min-width:0;padding:15px 17px;border-right:1px solid var(--line)}.record-cell:last-child{border-right:0}.record-label{display:block;color:var(--quiet);font-size:11px}.record-value{display:block;margin-top:3px;font-weight:680;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.stage-value{color:var(--amber)}.stage-value.invoiced{color:var(--green)}
+    .flow{display:grid;grid-template-columns:repeat(5,1fr);gap:26px;margin:34px 0;counter-reset:step}.flow-node{position:relative;min-height:140px;padding:18px;border:1px solid var(--line);border-radius:13px;background:#fff;transition:background .28s ease,border-color .28s ease,transform .28s ease}.flow-node::before{counter-increment:step;content:counter(step);display:grid;place-items:center;width:25px;height:25px;margin-bottom:22px;border-radius:50%;background:#eef1f6;color:var(--muted);font-size:11px;font-weight:800}.flow-node:not(:last-child)::after{content:"";position:absolute;top:38px;left:calc(100% + 6px);width:14px;height:1px;background:var(--line-strong)}.flow-node h3{margin:0;font-size:15px}.flow-node p{margin:6px 0 0;color:var(--muted);font-size:12px}.flow-node.active{border-color:var(--blue);background:var(--blue-soft);transform:translateY(-3px)}.flow-node.active::before{background:var(--blue);color:#fff}.flow-node.done{border-color:#8ac8af;background:var(--green-soft)}.flow-node.done::before{content:"✓";background:var(--green);color:#fff}
+    .sim-footer{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:stretch}.status-panel,.log{border:1px solid var(--line);border-radius:13px;padding:18px}.status-panel{display:flex;align-items:center;justify-content:space-between;gap:20px;background:#fafbfc}.status-copy b{display:block}.status-copy span{display:block;margin-top:3px;color:var(--muted);font-size:12px}.status-dot{width:11px;height:11px;border-radius:50%;background:var(--quiet);box-shadow:0 0 0 5px #edf0f5}.status-panel.running .status-dot{background:var(--blue);box-shadow:0 0 0 5px var(--blue-soft)}.status-panel.complete .status-dot{background:var(--green);box-shadow:0 0 0 5px var(--green-soft)}
+    .log{min-height:106px;background:var(--ink);color:#dbe2f0;font:12px/1.6 ui-monospace,SFMono-Regular,Consolas,monospace}.log-line{display:flex;gap:11px}.log-time{color:#7f8ba3}.log-line.success{color:#8fe1bd}.log-empty{color:#7f8ba3}
+    .report-section{padding:78px 0;background:#eef1f6;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+    .report-intro{display:grid;grid-template-columns:minmax(0,.8fr) minmax(500px,1.2fr);gap:54px;align-items:start}.report-intro h2{margin:0;font-size:clamp(40px,6vw,68px);line-height:.98;letter-spacing:-.058em}.report-intro .lead{margin-top:22px;font-size:17px}
+    .report-proof{margin-top:30px;padding:16px 18px;border-left:4px solid var(--green);background:var(--green-soft);color:#315e4f;font-size:13px}.report-proof strong{display:block;color:var(--green);margin-bottom:3px}
+    .report-shell{padding:22px;border:1px solid var(--line-strong);border-radius:18px;background:#fff;box-shadow:var(--shadow)}
+    .report-toolbar{display:flex;align-items:center;justify-content:space-between;gap:18px;padding-bottom:17px;border-bottom:1px solid var(--line)}.report-toolbar h3{margin:0;font-size:18px}.report-toolbar p{margin:3px 0 0;color:var(--muted);font-size:12px}.report-status{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:12px;font-weight:650}.report-status i{width:9px;height:9px;border-radius:50%;background:var(--quiet)}.report-status.running i{background:var(--blue);animation:pulse 1s infinite}.report-status.complete i{background:var(--green)}
+    @keyframes pulse{50%{box-shadow:0 0 0 6px var(--blue-soft)}}
+    .aging-summary{display:grid;grid-template-columns:1.2fr 1fr 1fr;margin:20px 0;border:1px solid var(--line);border-radius:12px;overflow:hidden}.aging-metric{padding:16px;border-right:1px solid var(--line)}.aging-metric:last-child{border-right:0}.aging-metric span{display:block;color:var(--muted);font-size:11px}.aging-metric strong{display:block;margin-top:4px;font-size:25px;letter-spacing:-.035em}.aging-metric:first-child strong{color:var(--blue)}
+    .aging-table{width:100%;border-collapse:collapse;font-size:12px}.aging-table th{text-align:left;color:var(--quiet);font-size:10px;text-transform:uppercase;letter-spacing:.06em}.aging-table th:last-child,.aging-table td:last-child{text-align:right}.aging-table th,.aging-table td{padding:11px 9px;border-bottom:1px solid var(--line)}.aging-table tbody tr{transition:opacity .25s ease,transform .25s ease}.report-shell.loading .aging-table tbody tr{opacity:.2;transform:translateY(4px)}
+    .bucket{display:inline-flex;padding:4px 8px;border-radius:999px;background:var(--blue-soft);color:var(--blue);font-size:10px;font-weight:750}.bucket.paid{background:var(--green-soft);color:var(--green)}.bucket.unbilled{background:var(--amber-soft);color:var(--amber)}
+    .report-actions{display:flex;gap:10px;align-items:center;margin-top:20px}.report-actions .button{display:inline-flex;align-items:center;justify-content:center;text-decoration:none}.report-actions [hidden]{display:none}.report-note{margin:20px 0 0;padding-top:16px;border-top:1px solid var(--line);color:var(--muted);font-size:11px;line-height:1.55}
+    .evidence{padding:74px 0;background:var(--ink);color:#fff}.section-head{display:flex;justify-content:space-between;gap:34px;align-items:flex-end;margin-bottom:35px}.section-head p{color:#aeb8ca}
+    .evidence-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}.evidence-card{min-height:210px;padding:23px;border:1px solid #3a455a;border-radius:15px;background:#202a3d}.evidence-card h3{margin:0;font-size:19px}.evidence-card p{margin:10px 0 0;color:#b6c0d0;font-size:14px}.evidence-card strong{display:block;margin-bottom:18px;color:#7eb0ff;font-size:36px;line-height:1;letter-spacing:-.05em}.safe-list{margin:13px 0 0;padding:0;list-style:none}.safe-list li{padding:7px 0;border-top:1px solid #394459;color:#c4ccda;font-size:13px}.safe-list li::before{content:"Stops safely: ";color:#7eb0ff}
+    footer{padding:32px 0;color:var(--muted);font-size:12px}.footer-inner{display:flex;justify-content:space-between;gap:24px;border-top:1px solid var(--line);padding-top:24px}.footer-inner p{margin:0;max-width:650px}
+    @media(max-width:900px){.hero{grid-template-columns:1fr;gap:46px}.invoice-shell{max-width:610px;margin:0 auto;transform:none}.proof{grid-template-columns:repeat(2,1fr)}.proof-item:nth-child(2){border-right:0}.proof-item:nth-child(-n+2){border-bottom:1px solid var(--line)}.flow{grid-template-columns:1fr 1fr}.flow-node:not(:last-child)::after{display:none}.record{grid-template-columns:1fr 1fr}.record-cell:nth-child(2){border-right:0}.record-cell:nth-child(-n+2){border-bottom:1px solid var(--line)}.sim-footer,.evidence-grid{grid-template-columns:1fr}.section-head{display:block}.report-intro{grid-template-columns:1fr}.report-shell{max-width:720px}}
+    @media(max-width:620px){.wrap{width:min(100% - 28px,1180px)}.topbar{padding:17px 0;flex-wrap:wrap}.brand span:last-child{font-size:14px}.top-links{width:100%;justify-content:flex-start}.top-link{min-height:38px;padding:0 11px;font-size:12px}.hero{padding:48px 0 40px}h1{font-size:50px}.proof{grid-template-columns:1fr}.proof-item{border-right:0;border-bottom:1px solid var(--line)}.proof-item:last-child{border-bottom:0}.invoice{min-height:480px;padding:23px}.invoice-title{font-size:30px}.invoice-head{display:block}.invoice-meta{text-align:left;margin-top:14px}.bill-grid{grid-template-columns:1fr;gap:15px;margin-bottom:30px}.invoice-table th:nth-child(2),.invoice-table th:nth-child(3),.invoice-table td:nth-child(2),.invoice-table td:nth-child(3){display:none}.totals{width:100%}.sim-card{padding:20px}.sim-head{display:block}.sim-head .button{margin-top:18px}.record{grid-template-columns:1fr}.record-cell{border-right:0;border-bottom:1px solid var(--line)}.record-cell:last-child{border-bottom:0}.flow{grid-template-columns:1fr}.flow-node{min-height:120px}.sim-footer{grid-template-columns:1fr}.status-panel{display:block}.status-panel .button{width:100%;margin-top:15px}.privacy{display:block}.privacy b{display:block;margin-bottom:3px}.report-section{padding:58px 0}.report-intro h2{font-size:43px}.report-shell{padding:15px}.report-toolbar{display:block}.report-status{margin-top:12px}.aging-summary{grid-template-columns:1fr}.aging-metric{border-right:0;border-bottom:1px solid var(--line)}.aging-metric:last-child{border-bottom:0}.aging-table th:nth-child(2),.aging-table td:nth-child(2){display:none}.report-actions{align-items:stretch;flex-direction:column}.report-actions .button{width:100%}.footer-inner{display:block}.footer-inner p+p{margin-top:12px}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.flow-node{transition:none}}
+  </style>
+</head>
+<body>
+  <header class="wrap topbar">
+    <div class="brand"><span class="brand-mark">AR</span><span>Accounts Receivable Automation Suite</span></div>
+    <div class="top-links">
+      <a class="top-link" href="sample-invoice.pdf" target="_blank" rel="noopener">Sample invoice</a>
+      <a class="top-link" href="sample-aging-report.xlsx" download>Sample aging report</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="wrap hero">
+      <div>
+        <p class="kicker">Two accounts-receivable systems, one shared pipeline</p>
+        <h1>Send the invoice. See who still owes.</h1>
+        <p class="lead">A GoHighLevel stage change runs the invoice workflow through n8n and Trigger.dev. The same CRM data feeds a separate production-verified engine that groups receivables and builds a usable Excel aging report.</p>
+        <div class="hero-actions">
+          <a class="button button-primary" href="#demo">Run the invoice workflow</a>
+          <a class="button button-secondary" href="#aging-report">Explore the aging report</a>
+          <a class="button button-secondary" href="sample-invoice.pdf" download>Download sample PDF</a>
+        </div>
+        <div class="proof" aria-label="Project evidence">
+          <div class="proof-item"><b>23/23</b><span>invoice edge cases passed</span></div>
+          <div class="proof-item"><b>74/74</b><span>aging-report checks passed</span></div>
+          <div class="proof-item"><b>20 nodes</b><span>in the n8n invoice workflow</span></div>
+          <div class="proof-item"><b>End to end</b><span>invoice loop verified by CRM drag</span></div>
+        </div>
+      </div>
+
+      <div class="invoice-shell" aria-label="Sample generated invoice">
+        <article class="invoice">
+          <div class="invoice-head">
+            <div><div class="invoice-logo">Bright Pixel Studio</div><div class="invoice-title">INVOICE</div></div>
+            <div class="invoice-meta"><div>INVOICE <b>#INV-C-001-20260804</b></div><div>DATE <b>2026-08-04</b></div><div>DUE <b>2026-08-18</b></div></div>
+          </div>
+          <div class="bill-grid">
+            <div><h3>From</h3><p><strong>Bright Pixel Studio</strong><br>12 Aurora St., Quezon City<br>billing@brightpixel.example</p></div>
+            <div><h3>Bill to</h3><p><strong>Aria Bennett</strong><br>aria.bennett@example.com</p></div>
+          </div>
+          <table class="invoice-table">
+            <thead><tr><th>Description</th><th>Qty</th><th>Unit price</th><th>Amount</th></tr></thead>
+            <tbody><tr><td>Brand consult (1 hour)</td><td>1</td><td>$200.00</td><td>$200.00</td></tr><tr><td>Homepage copy</td><td>1</td><td>$300.00</td><td>$300.00</td></tr></tbody>
+          </table>
+          <div class="totals"><div class="total-row"><span>Subtotal</span><span>$500.00</span></div><div class="total-row"><span>Tax 8.75%</span><span>$43.75</span></div><div class="total-row final"><span>Total</span><span>$543.75</span></div></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="wrap sim-section" id="demo">
+      <div class="privacy"><b>Public demo</b><span>The workflow and outcomes are faithful to the completed build. Names, addresses, IDs, endpoints, and credentials are synthetic or withheld.</span></div>
+      <div class="sim-card" style="margin-top:18px">
+        <div class="sim-head">
+          <div><h2>Run the invoice handoff</h2><p>Start with one CRM card in Not Yet Invoiced. The simulation follows the same five system boundaries as the validated production-style build.</p></div>
+          <button class="button button-primary" id="run">Move to Invoiced</button>
+        </div>
+
+        <div class="record" aria-label="Synthetic CRM record">
+          <div class="record-cell"><span class="record-label">Customer</span><span class="record-value">Aria Bennett</span></div>
+          <div class="record-cell"><span class="record-label">Customer ID</span><span class="record-value">C-001</span></div>
+          <div class="record-cell"><span class="record-label">Line items</span><span class="record-value">2 · $500.00</span></div>
+          <div class="record-cell"><span class="record-label">Pipeline stage</span><span class="record-value stage-value" id="stage">Not Yet Invoiced</span></div>
+        </div>
+
+        <div class="flow" aria-label="Automation sequence">
+          <article class="flow-node" data-step="0"><h3>GoHighLevel</h3><p>The card enters the Invoiced stage and sends the webhook.</p></article>
+          <article class="flow-node" data-step="1"><h3>n8n</h3><p>Contact fields and matching line items are read and validated.</p></article>
+          <article class="flow-node" data-step="2"><h3>Trigger.dev</h3><p>The branded PDF is generated with hand-checked totals.</p></article>
+          <article class="flow-node" data-step="3"><h3>Email</h3><p>The PDF is attached to the synthetic customer message.</p></article>
+          <article class="flow-node" data-step="4"><h3>CRM update</h3><p>Invoice date, sent flag, and $543.75 total are written back.</p></article>
+        </div>
+
+        <div class="sim-footer">
+          <div class="status-panel" id="status-panel">
+            <div style="display:flex;align-items:center;gap:12px"><span class="status-dot"></span><div class="status-copy"><b id="status-title">Ready to run</b><span id="status-copy">No external services are called in this public simulation.</span></div></div>
+            <button class="button button-secondary" id="reset" disabled>Reset demo</button>
+          </div>
+          <div class="log" id="log" aria-live="polite"><div class="log-empty">Waiting for a stage change...</div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="report-section" id="aging-report">
+      <div class="wrap report-intro">
+        <div>
+          <p class="kicker">Monthly aging report engine</p>
+          <h2>Six CRM records in. One workbook out.</h2>
+          <p class="lead">The Trigger.dev task normalizes CRM dates, groups contacts by pipeline stage, calculates whole calendar days outstanding, keeps paid totals separate, and writes real Excel number and date cells.</p>
+          <div class="report-proof"><strong>Production task verified</strong>The deployed task completed with a production-key run. Its delivered workbook passed 20/20 checks and matched the development output byte for byte.</div>
+        </div>
+
+        <div class="report-shell" id="report-shell">
+          <div class="report-toolbar">
+            <div><h3>Aging report · 5 Aug 2026</h3><p>Synthetic sample data · USD</p></div>
+            <div class="report-status" id="report-status"><i></i><span>Ready to generate</span></div>
+          </div>
+          <div class="aging-summary">
+            <div class="aging-metric"><span>Outstanding</span><strong>$1,545.00</strong></div>
+            <div class="aging-metric"><span>Records</span><strong>6</strong></div>
+            <div class="aging-metric"><span>Workbook sheets</span><strong>2</strong></div>
+          </div>
+          <table class="aging-table" aria-label="Synthetic aging report preview">
+            <thead><tr><th>Stage</th><th>Contacts</th><th>Oldest</th><th>Total</th></tr></thead>
+            <tbody>
+              <tr><td><span class="bucket unbilled">Not Yet Invoiced</span></td><td>2</td><td>—</td><td>$0.00</td></tr>
+              <tr><td><span class="bucket">Invoiced</span></td><td>3</td><td>46 days</td><td>$1,545.00</td></tr>
+              <tr><td><span class="bucket paid">Paid</span></td><td>1</td><td>35 days</td><td>$250.00</td></tr>
+            </tbody>
+          </table>
+          <div class="report-actions">
+            <button class="button button-primary" type="button" id="report-run">Generate report preview</button>
+            <a class="button button-secondary" id="report-download" href="sample-aging-report.xlsx" download hidden>Download sample .xlsx</a>
+          </div>
+          <p class="report-note"><strong>Validation boundary:</strong> the workbook engine is deployed and production-run verified. The retained project record does not confirm completion of the separate Make monthly scheduler and owner-email scenario, so this case study does not claim that unattended delivery was activated.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="evidence">
+      <div class="wrap">
+        <div class="section-head"><div><h2>Built for the failures, not only the happy path.</h2></div><p>The invoice and report tasks were tested against missing fields, malformed values, rounding, timezone shifts, empty pipelines, and workbook integrity—not just one perfect sample.</p></div>
+        <div class="evidence-grid">
+          <article class="evidence-card"><strong>23/23</strong><h3>Invoice edge cases passed</h3><p>Empty line items, malformed quantities, zero totals, rounding, long descriptions, and missing fields were exercised before the CRM drag test.</p></article>
+          <article class="evidence-card"><strong>74/74</strong><h3>Report checks passed</h3><p>Empty stages, missing dates, zero totals, timezone-shifted CRM dates, Excel cell types, subtotals, and grand totals were verified.</p></article>
+          <article class="evidence-card"><strong>20/20</strong><h3>Delivered workbook checks</h3><p>A real Trigger.dev pipeline run produced an openable two-sheet workbook whose stages, dates, formulas, and totals matched the answer key.</p></article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="wrap"><div class="footer-inner"><p><strong>Accounts Receivable Automation Suite</strong> · public case study combining the Aging Invoice Engine and Monthly Aging Report.</p><p>All visible customer and company data is synthetic.</p></div></footer>
+
+  <script>
+    (()=>{
+      const run=document.getElementById('run');
+      const reset=document.getElementById('reset');
+      const stage=document.getElementById('stage');
+      const panel=document.getElementById('status-panel');
+      const title=document.getElementById('status-title');
+      const copy=document.getElementById('status-copy');
+      const log=document.getElementById('log');
+      const nodes=[...document.querySelectorAll('.flow-node')];
+      const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const events=[
+        ['Webhook received','CRM card entered Invoiced'],
+        ['Payload validated','2 line items matched to C-001'],
+        ['PDF generated','subtotal 500.00 · tax 43.75 · total 543.75'],
+        ['Email prepared','sample-invoice.pdf attached'],
+        ['CRM updated','invoice date · sent = Yes · total 543.75']
+      ];
+      let timers=[];
+
+      function line(index,success=false){
+        const row=document.createElement('div');row.className='log-line'+(success?' success':'');
+        const t=document.createElement('span');t.className='log-time';t.textContent='00:'+String(index+1).padStart(2,'0');
+        const m=document.createElement('span');m.textContent=events[index][0]+' - '+events[index][1];
+        row.append(t,m);log.append(row);
+      }
+      function activate(index){
+        nodes.forEach((n,i)=>{n.classList.toggle('active',i===index);if(i<index)n.classList.add('done')});
+        line(index,index===events.length-1);
+        title.textContent=events[index][0];copy.textContent=events[index][1];
+        if(index===events.length-1){
+          nodes[index].classList.remove('active');nodes[index].classList.add('done');
+          panel.className='status-panel complete';title.textContent='Invoice loop complete';copy.textContent='The synthetic record now carries the invoice date, sent flag, and $543.75 total.';
+          reset.disabled=false;run.disabled=false;run.textContent='Run again';
+        }
+      }
+      function start(){
+        timers.forEach(clearTimeout);timers=[];nodes.forEach(n=>n.className='flow-node');
+        log.innerHTML='';panel.className='status-panel running';stage.textContent='Invoiced';stage.classList.add('invoiced');
+        run.disabled=true;reset.disabled=true;title.textContent='Workflow running';copy.textContent='Following the validated five-system handoff.';
+        events.forEach((_,i)=>timers.push(setTimeout(()=>activate(i),reduced?i*80:i*650)));
+      }
+      function clear(){
+        timers.forEach(clearTimeout);timers=[];nodes.forEach(n=>n.className='flow-node');
+        stage.textContent='Not Yet Invoiced';stage.classList.remove('invoiced');panel.className='status-panel';
+        title.textContent='Ready to run';copy.textContent='No external services are called in this public simulation.';
+        log.innerHTML='<div class="log-empty">Waiting for a stage change...</div>';run.disabled=false;run.textContent='Move to Invoiced';reset.disabled=true;
+      }
+      run.addEventListener('click',start);reset.addEventListener('click',clear);
+
+      const reportRun=document.getElementById('report-run');
+      const reportShell=document.getElementById('report-shell');
+      const reportStatus=document.getElementById('report-status');
+      const reportDownload=document.getElementById('report-download');
+      const reportSteps=['Reading 6 CRM records','Normalizing dates and stages','Writing Summary and Aging Report sheets','Workbook ready · 20/20 checks matched'];
+      let reportTimers=[];
+
+      reportRun.addEventListener('click',()=>{
+        reportTimers.forEach(clearTimeout);reportTimers=[];
+        reportRun.disabled=true;reportDownload.hidden=true;reportShell.classList.add('loading');
+        reportStatus.className='report-status running';reportStatus.querySelector('span').textContent=reportSteps[0];
+        reportSteps.forEach((message,index)=>{
+          reportTimers.push(setTimeout(()=>{
+            reportStatus.querySelector('span').textContent=message;
+            if(index===reportSteps.length-1){
+              reportStatus.className='report-status complete';reportShell.classList.remove('loading');
+              reportRun.disabled=false;reportRun.textContent='Generate again';reportDownload.hidden=false;
+            }
+          },reduced?index*90:index*650));
+        });
+      });
+    })();
+  </script>
+</body>
+</html>
